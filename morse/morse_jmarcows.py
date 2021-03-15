@@ -27,6 +27,16 @@ letter_to_morse = {
     "z": "--.."
 }
 
+
+def file_to_array(file):
+    f = open(file, "r")
+    array_of_lines = []
+    for line in f:
+        array_of_lines.append(line)
+    f.close()
+    return array_of_lines
+
+
 # quick test
 y = letter_to_morse["y"]
 print(y)
