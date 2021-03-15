@@ -40,3 +40,5 @@ def file_to_array(file):
 # quick test
 y = letter_to_morse["y"]
 print(y)
+
+# can you hear me GitLab?
