@@ -46,8 +46,8 @@ def main(arguments):
                                      "content into standard output in " +
                                      "morse code")
 
-    parser.add_argument('files', type=argparse.FileType('r'), nargs='+',
-                        help="files to translate into morse code")
+    parser.add_argument('files', type=argparse.FileType('r', encoding="utf8"),
+                        nargs='+', help="files to translate into morse code")
 
     args = parser.parse_args()
 
