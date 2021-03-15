@@ -1,4 +1,3 @@
-
 from io import TextIOWrapper
 from argparse import ArgumentParser
 
