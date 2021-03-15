@@ -39,7 +39,7 @@ def letter_to_morse(letter):
         return ""
 
 
-def main(arguments):
+def main():
     parser = argparse.ArgumentParser(prog="morse translator",
                                      description="reads the contents of " +
                                      "a given text file and prints its " +
