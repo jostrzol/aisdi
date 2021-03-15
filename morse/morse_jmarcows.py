@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-letter_to_morse = {
+letter_to_morse_dict = {
     "a": ".-",
     "b": "-...",
     "c": "-.-.",
@@ -27,16 +27,28 @@ letter_to_morse = {
     "w": ".--",
     "x": "-..-",
     "y": "-.--",
-    "z": "--.."
+    "z": "--..",
+    " ": "/"
 }
 
 
+def letter_to_morse(letter):
+    try:
+        return f"{letter_to_morse_dict[letter.lower()]} "
+    except KeyError:
+        return ""
+
+
 def main(arguments):
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser("morse",
+                                     "reads the contents of a given text" +
+                                     "file and prints its content into" +
+                                     "standard output in morse code")
 
-    parser.add_argument('file', type=argparse.FileType('r'), nargs='+')
+    parser.add_argument('file', type=argparse.FileType('r'), nargs='+',
+                        help="file to translate into morse code")
 
-    args = parser.parse_args(arguments[1:])
+    args = parser.parse_args()
     morse = []
 
     for f in args.file:
@@ -44,16 +56,14 @@ def main(arguments):
             l = line.rstrip()
             morse_line = ""
             for letter in l:
-                if letter == " ":
-                    morse_line += " /"
-                elif letter.lower() in letter_to_morse.keys():
-                    morse_line += f" {letter_to_morse[letter.lower()]}"
+                morse_line += letter_to_morse(letter)
+            morse_line = morse_line[:-1]
             morse.append(morse_line)
-    
+
     for i in range(len(morse)):
         while " / /" in morse[i]:
             morse[i] = morse[i].replace(" / /", " /")
-    
+
     for line in morse:
         print(line)
 
