@@ -23,3 +23,11 @@ def test_quicksort():
 
 def test_bubblesort():
     algorithm_test(algorithms.bubblesort)
+
+
+def test_mergesort():
+    algorithm_test(algorithms.mergesort)
+
+
+def test_countsort():
+    algorithm_test(algorithms.countsort)
