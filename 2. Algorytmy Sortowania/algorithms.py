@@ -28,6 +28,8 @@ def bubblesort(lst: list, copy=True):
     if copy:
         lst = list(lst)
 
+    # dla n-elementowej listy algorytm
+    # obróci się (n-1) razy
     for i in range(len(lst), 1, -1):
         for j in range(i-1):
             if lst[j] > lst[j+1]:
@@ -48,6 +50,9 @@ def mergesort(lst: list, copy=True):
         mergesort(R, False)
 
         L_counter = R_counter = counter = 0
+
+        # dopóki w lewej i prawej
+        # połówce są jakieś elementy
         while L_counter < len(L) and R_counter < len(R):
             if L[L_counter] < R[R_counter]:
                 lst[counter] = L[L_counter]
@@ -57,6 +62,9 @@ def mergesort(lst: list, copy=True):
                 R_counter += 1
             counter += 1
 
+        # gdy jedna z połówek jest pusta,
+        # przepisz zawartość drugiej do
+        # sortowanej listy
         while L_counter < len(L):
             lst[counter] = L[L_counter]
             L_counter += 1
