@@ -2,6 +2,8 @@ from typing import Callable, Dict
 from timeit import timeit
 from matplotlib import pyplot as plt
 
+import algorithms as alg
+
 default_benchmark_filename = "reference/lorem_ipsum.txt"
 
 
@@ -28,3 +30,17 @@ def plot_benchmark(benchmark: Dict[int, float], filename: str):
     plt.plot(list(benchmark.keys()), list(benchmark.values()), "bo")
     plt.savefig(filename)
     plt.close()
+
+
+if __name__ == "__main__":
+    plot_dir = "plots/"
+    number = 10
+    to_benchmark = {
+        "quicksort.png": alg.quicksort,
+        "mergesort.png": alg.mergesort,
+        "bubblesort.png": alg.bubblesort,
+        "countsort.png": alg.countsort}
+
+    for filename, func in to_benchmark.items():
+        b = benchmark_sort(func, number=number)
+        plot_benchmark(b, plot_dir + filename)
