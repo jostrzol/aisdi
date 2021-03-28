@@ -27,3 +27,4 @@ def benchmark_sort(
 def plot_benchmark(benchmark: Dict[int, float], filename: str):
     plt.plot(list(benchmark.keys()), list(benchmark.values()), "bo")
     plt.savefig(filename)
+    plt.close()

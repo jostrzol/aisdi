@@ -1,20 +1,33 @@
-def quicksort(lst: list):
-    if len(lst) <= 1:
+def quicksort(lst: list, start=0, end=None, copy=True):
+    if copy:
+        lst = list(lst)
+
+    if end is None:
+        end = len(lst)
+
+    if end - start <= 1:
         return lst
-    pivot = lst[-1]
-    i = 0
-    for j, el in enumerate(lst[:-1]):
-        if el < pivot:
+
+    pivot = lst[end-1]
+    i = start
+    for j in range(start, end - 1):
+        if lst[j] < pivot:
             tmp = lst[i]
-            lst[i] = el
+            lst[i] = lst[j]
             lst[j] = tmp
             i += 1
-    lst[-1] = lst[i]
+
+    lst[end-1] = lst[i]
     lst[i] = pivot
-    return [*quicksort(lst[:i]), pivot, *quicksort(lst[i+1:])]
+    quicksort(lst, start=start, end=i, copy=False)
+    quicksort(lst, start=i+1, end=end, copy=False)
+    return lst
 
 
-def bubblesort(lst: list):
+def bubblesort(lst: list, copy=True):
+    if copy:
+        lst = list(lst)
+
     for i in range(len(lst), 1, -1):
         for j in range(i-1):
             if lst[j] > lst[j+1]:
