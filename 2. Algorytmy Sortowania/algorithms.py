@@ -60,11 +60,7 @@ def countsort(lst: list):
     # dana implementacja działa poprawnie tylko
     # w przypadku, gdy sortowana lista zawiera
     # dane jednego typu (tj. tylko liczby całkowite
-    # albo tylko tekst); jeżeli dane tekstowe
-    # reprezentują różne typy (np. w przypadku listy
-    # ['1', '3', 'a', '-1']), algorytm nie będzie działał
-    # (z powodu elementu '-1', który spowoduje błąd w
-    # funkcji ord())
+    # albo tylko tekst)
     if type(lst[0]) is str:
         lst_min = ord(min(lst))
         lst_max = ord(max(lst))
