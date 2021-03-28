@@ -69,18 +69,43 @@ def mergesort(lst: list):
 
 def countsort(lst: list):
     size = len(lst)
-    lst_min = min(lst)
-    lst_max = max(lst)
 
-    count = [0] * len(range(lst_min, lst_max+1))
-    for i in range(0, size):
-        count[lst[i]-lst_min] += 1
+    # dana implementacja działa poprawnie tylko
+    # w przypadku, gdy sortowana lista zawiera
+    # dane jednego typu (tj. tylko liczby całkowite
+    # albo tylko tekst)
+    if type(lst[0]) is str:
+        lst_min = ord(min(lst))
+        lst_max = ord(max(lst))
 
-    count_i = count_v = 0
-    for elem in count:
-        for i in range(elem):
-            lst[count_i] = lst_min + count_v
-            count_i += 1
-        count_v += 1
+        # tworzymy listę zawierającą liczbę wystąpień
+        # danej liczby w zakresie sortowanej tablicy
+        count = [0] * len(range(lst_min, lst_max+1))
+        for i in range(0, size):
+            count[ord(lst[i])-lst_min] += 1
+
+        # zastępujemy liczby w sortowanej tablicy
+        # korzystając z listy zawierającej liczbę
+        # wystąpień poszczególnych liczb
+        count_i = count_v = 0
+        for elem in count:
+            for i in range(elem):
+                lst[count_i] = chr(lst_min + count_v)
+                count_i += 1
+            count_v += 1
+    else:
+        lst_min = min(lst)
+        lst_max = max(lst)
+
+        count = [0] * len(range(lst_min, lst_max+1))
+        for i in range(0, size):
+            count[lst[i]-lst_min] += 1
+
+        count_i = count_v = 0
+        for elem in count:
+            for i in range(elem):
+                lst[count_i] = lst_min + count_v
+                count_i += 1
+            count_v += 1
 
     return lst
