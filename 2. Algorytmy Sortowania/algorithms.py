@@ -37,13 +37,15 @@ def bubblesort(lst: list, copy=True):
     return lst
 
 
-def mergesort(lst: list):
+def mergesort(lst: list, copy=True):
+    if copy:
+        lst = list(lst)
     if len(lst) > 1:
         mid = len(lst)//2
         L = lst[:mid]
         R = lst[mid:]
-        mergesort(L)
-        mergesort(R)
+        mergesort(L, False)
+        mergesort(R, False)
 
         L_counter = R_counter = counter = 0
         while L_counter < len(L) and R_counter < len(R):
@@ -67,7 +69,13 @@ def mergesort(lst: list):
     return lst
 
 
-def countsort(lst: list):
+def countsort(lst: list, copy=True):
+    if copy:
+        lst = list(lst)
+
+    if len(lst) <= 1:
+        return lst
+
     size = len(lst)
 
     # dana implementacja działa poprawnie tylko
