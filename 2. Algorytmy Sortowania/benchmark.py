@@ -39,7 +39,7 @@ if __name__ == "__main__":
         "quicksort.png": alg.quicksort,
         "mergesort.png": alg.mergesort,
         "bubblesort.png": alg.bubblesort,
-        "countsort.png": alg.countsort}
+        "countsort_char.png": alg.countsort_char}
 
     for filename, func in to_benchmark.items():
         b = benchmark_sort(func, number=number)

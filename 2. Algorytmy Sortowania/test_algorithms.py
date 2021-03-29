@@ -28,5 +28,5 @@ def test_mergesort():
     algorithm_test(algorithms.mergesort)
 
 
-def test_countsort():
-    algorithm_test(algorithms.countsort)
+def test_countsort_char():
+    algorithm_test(algorithms.countsort_char)
