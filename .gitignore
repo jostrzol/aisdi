@@ -139,7 +139,7 @@ dmypy.json
 .prof
 
 ### VisualStudioCode ###
-.vscode/*
+/**/.vscode
 !.vscode/tasks.json
 *.code-workspace
 
