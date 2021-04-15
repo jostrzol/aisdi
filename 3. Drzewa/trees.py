@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Optional
 from random import sample, seed
+from io import TextIOWrapper
 
 
 class BST_node:
@@ -48,6 +49,32 @@ class BST_node:
             res = res + self.right.InOrderTraversal()
         return res
 
+    def to_html(self, f: TextIOWrapper):
+        f.write(f"<a>{self.data}</a>\n")
+        if self.left is None and self.right is None:
+            return
+        f.write("<ul>\n")
+        if self.left is not None:
+            f.write("<li>\n")
+            self.left.to_html(f)
+            f.write("</li>\n")
+        if self.right is not None:
+            f.write("<li>\n")
+            self.right.to_html(f)
+            f.write("</li>\n")
+        f.write("</ul>\n")
+
+    def to_xml(self, f: TextIOWrapper):
+        f.write(f"<data>{self.data}</data>\n")
+        if self.left is not None:
+            f.write("<left>\n")
+            self.left.to_xml(f)
+            f.write("</left>\n")
+        if self.right is not None:
+            f.write("<right>\n")
+            self.right.to_xml(f)
+            f.write("</right>\n")
+
 
 class BST():
     def __init__(self, data=None):
@@ -60,6 +87,23 @@ class BST():
 
     def InOrderTraversal(self) -> list:
         return self._root.InOrderTraversal()
+
+    def to_html(self, f: TextIOWrapper):
+        f.write('<!DOCTYPE html> <html lang="en" class="">  <head> 	<meta charset="UTF-8"> 	<link rel="stylesheet" href="tree.css"> </head>')
+        f.write('<body>\n')
+        f.write('<div class="tree">\n')
+        f.write('<ul>\n')
+        f.write('<li>\n')
+        self._root.to_html(f)
+        f.write('</li>\n')
+        f.write('</ul>\n')
+        f.write('</div>\n')
+        f.write('</body>\n')
+
+    def to_xml(self, f: TextIOWrapper):
+        f.write('<tree>\n')
+        self._root.to_xml(f)
+        f.write('</tree>\n')
 
 
 class AVL_node(BST_node):
@@ -82,51 +126,51 @@ class AVL_node(BST_node):
         elif self._balance == 1:
             grown_child = self.right
 
-            if self is parent.left:
-                parent._balance -= 1
-            else:
-                parent._balance += 1
+        if self is parent.left:
+            parent._balance -= 1
+        else:
+            parent._balance += 1
 
-            if abs(parent._balance) > 1:
-                if parent._balance * self._balance < 0:
-                    # unbalanced tree is between self and parent, need two roations
-                    grown_child._rotate()
-                    grown_child._rotate()
+        if abs(parent._balance) > 1:
+            if parent._balance * self._balance < 0:
+                # unbalanced tree is between self and parent, need two roations
+                grown_child._rotate()
+                grown_child._rotate()
 
-                    growth_point = parent._balance * grown_child._balance
+                growth_point = parent._balance * grown_child._balance
 
-                    if growth_point == 0:
-                        # grown_child._balance must have been 0, so now everything is balanced
-                        parent._balance = 0
-                        self._balance = 0
-                    elif growth_point > 0:
-                        # grown tree is now in the "inner side" of self,
-                        # so parent must be unbalanced to the "inner side" and self is balanced;
-                        # inner side is left if self._balance == -1 and right if self._balance == 1
-
-                        parent._balance = self._balance
-                        self._balance = 0
-                    else:
-                        # grown tree is now in the "inner side" of parent,
-                        # so self must be unbalanced to the "inner side" and parent is balanced;
-                        # inner side is left if parent._balance/2 == -1 and right if parent._balance/2 == 1
-
-                        self._balance = parent._balance/2
-                        parent._balance = 0
-
-                    # either way grown_child is on top and is balanced
-                    grown_child._balance = 0
-
-                    parent = grown_child  # grown_child comes on top
-                else:
-                    # self is between the unbalanced tree and parent, need one roation
-                    self._rotate()
+                if growth_point == 0:
+                    # grown_child._balance must have been 0, so now everything is balanced
                     parent._balance = 0
                     self._balance = 0
-                    parent = self  # self comes on top
+                elif growth_point > 0:
+                    # grown tree is now in the "inner side" of self,
+                    # so parent must be unbalanced to the "inner side" and self is balanced;
+                    # inner side is left if self._balance == -1 and right if self._balance == 1
 
-            if parent is not None and parent._balance != 0:
-                parent._propagate_balance()
+                    parent._balance = self._balance
+                    self._balance = 0
+                else:
+                    # grown tree is now in the "inner side" of parent,
+                    # so self must be unbalanced to the "inner side" and parent is balanced;
+                    # inner side is left if parent._balance/2 == -1 and right if parent._balance/2 == 1
+
+                    self._balance = parent._balance/2
+                    parent._balance = 0
+
+                # either way grown_child is on top and is balanced
+                grown_child._balance = 0
+
+                parent = grown_child  # grown_child comes on top
+            else:
+                # self is between the unbalanced tree and parent, need one roation
+                self._rotate()
+                parent._balance = 0
+                self._balance = 0
+                parent = self  # self comes on top
+
+        if parent is not None and parent._balance != 0:
+            parent._propagate_balance()
 
     def _rotate(self):
         if self.parent is None:
@@ -197,9 +241,14 @@ if __name__ == "__main__":
     # print(a1.InOrderTraversal())
 
     a = AVL()
-    for i in sample(range(3000), 1000):
+    for i in sample(range(3000), 80):
         a.insert(i)
+
     print(a.InOrderTraversal())
+    with open('AVL.html', 'w') as f:
+        a.to_html(f)
+    with open('AVL.xml', 'w') as f:
+        a.to_xml(f)
 
     a2 = AVL(27)
     a2.insert(14)
