@@ -37,6 +37,7 @@ class BST_node:
             res = res + self.right.InOrderTraversal()
         return res
 
+# Left -> Right -> Root
     def PostOrderTraversal(self):
         res = []
         if self.left:
@@ -46,6 +47,7 @@ class BST_node:
         res.append(self.data)
         return res
 
+# Root -> Left -> Right
     def PreOrderTraversal(self):
         res = [self.data]
         if self.left:
@@ -92,6 +94,12 @@ class BST():
 
     def InOrderTraversal(self) -> list:
         return self._root.InOrderTraversal()
+
+    def PostOrderTraversal(self) -> list:
+        return self._root.PostOrderTraversal()
+
+    def PreOrderTraversal(self) -> list:
+        return self._root.PreOrderTraversal()
 
     def to_html(self, f: TextIOWrapper):
         html_header = '<!DOCTYPE html> <html lang="en" class="">  <head> 	'
