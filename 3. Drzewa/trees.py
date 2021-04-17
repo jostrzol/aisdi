@@ -27,6 +27,29 @@ class BST_node:
         else:
             self.data = data
 
+# Delete Node
+    def delete(self, data):
+        if self is None:
+            return self
+        if data < self.data:
+            if self.left:
+                self.left = self.left.delete(data)
+            return self
+        if data > self.data:
+            if self.right:
+                self.right = self.right.delete(data)
+            return self
+        if self.right is None:
+            return self.left
+        if self.left is None:
+            return self.right
+        min_larger_node = self.right
+        while min_larger_node.left:
+            min_larger_node = min_larger_node.left
+        self.data = min_larger_node.data
+        self.right = self.right.delete(min_larger_node.data)
+        return self
+
 # Left -> Root -> Right
     def InOrderTraversal(self) -> list:
         res = []
@@ -91,6 +114,9 @@ class BST():
         self._root.insert(data)
         if self._root.parent is not None:
             self._root = self._root.parent
+
+    def delete(self, data):
+        self._root.delete(data)
 
     def InOrderTraversal(self) -> list:
         return self._root.InOrderTraversal()
@@ -285,6 +311,7 @@ if __name__ == "__main__":
     b1.insert(35)
     b1.insert(10)
     b1.insert(19)
+    b1.delete(35)
     b1.insert(31)
     b1.insert(42)
     print(b1.InOrderTraversal())
