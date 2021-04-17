@@ -215,7 +215,8 @@ class AVL_node(BST_node):
 
         if abs(parent._balance) > 1:
             if parent._balance * self._balance < 0:
-                # unbalanced tree is between self and parent, need two roations
+                # unbalanced tree is between self and parent,
+                # need two rotations
                 grown_child._rotate()
                 grown_child._rotate()
 
@@ -251,7 +252,7 @@ class AVL_node(BST_node):
                 parent = grown_child  # grown_child comes on top
             else:
                 # self is between the unbalanced tree and parent,
-                # need one roation
+                # need one rotation
                 self._rotate()
                 parent._balance = 0
                 self._balance = 0
