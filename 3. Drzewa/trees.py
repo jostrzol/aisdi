@@ -92,11 +92,13 @@ class BST():
         f.write('<!DOCTYPE html> <html lang="en" class="">  <head> 	<meta charset="UTF-8"> 	<link rel="stylesheet" href="tree.css"> </head>')
         f.write('<body>\n')
         f.write('<div class="tree">\n')
+        f.write('<div class="canvas">\n')
         f.write('<ul>\n')
         f.write('<li>\n')
         self._root.to_html(f)
         f.write('</li>\n')
         f.write('</ul>\n')
+        f.write('</div>\n')
         f.write('</div>\n')
         f.write('</body>\n')
 
@@ -200,15 +202,13 @@ class AVL_node(BST_node):
         if self.data:
             if data < self.data:
                 if self.left is None:
-                    self.left = AVL_node(data)
-                    self.left.parent = self
+                    self.left = AVL_node(data, parent=self)
                     self.left._propagate_balance()
                 else:
                     self.left.insert(data)
             elif data > self.data:
                 if self.right is None:
-                    self.right = AVL_node(data)
-                    self.right.parent = self
+                    self.right = AVL_node(data, parent=self)
                     self.right._propagate_balance()
                 else:
                     self.right.insert(data)
