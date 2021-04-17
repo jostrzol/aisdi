@@ -5,18 +5,14 @@ from io import TextIOWrapper
 
 
 class BST_node:
-
     def __init__(self, data, parent: Optional[BST_node] = None):
-
         self.left: Optional[BST_node] = None
         self.right: Optional[BST_node] = None
         self.data = data
-
         self.parent = parent
 
 # Insert Node
     def insert(self, data):
-
         if self.data:
             if data < self.data:
                 if self.left is None:
@@ -31,14 +27,6 @@ class BST_node:
         else:
             self.data = data
 
-# Print the Tree
-    def PrintTree(self):
-        if self.left:
-            self.left.PrintTree()
-        print(self.data),
-        if self.right:
-            self.right.PrintTree()
-
 # Left -> Root -> Right
     def InOrderTraversal(self) -> list:
         res = []
@@ -47,6 +35,23 @@ class BST_node:
         res.append(self.data)
         if self.right:
             res = res + self.right.InOrderTraversal()
+        return res
+
+    def PostOrderTraversal(self):
+        res = []
+        if self.left:
+            res += self.left.PostOrderTraversal()
+        if self.right:
+            res += self.right.PostOrderTraversal()
+        res.append(self.data)
+        return res
+
+    def PreOrderTraversal(self):
+        res = [self.data]
+        if self.left:
+            res += self.left.PreOrderTraversal()
+        if self.right:
+            res += self.right.PreOrderTraversal()
         return res
 
     def to_html(self, f: TextIOWrapper):
@@ -112,7 +117,6 @@ class BST():
 
 
 class AVL_node(BST_node):
-
     def __init__(self, data, parent: Optional[AVL_node] = None):
         super().__init__(data, parent=parent)
         self.parent: AVL_node
