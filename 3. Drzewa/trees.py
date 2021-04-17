@@ -55,8 +55,8 @@ class BST_node:
         if self is None or self.data == data:
             return self
         if self.data < data:
-            return self.search(self.right, data)
-        return self.search(self.left, data)
+            return self.right.search(data)
+        return self.left.search(data)
 
 # Node with minimum value
     def min_node(self):
@@ -144,15 +144,15 @@ class BST():
 
 # Search Node
     def search(self, data):
-        self._root.search(data)
+        return self._root.search(data)
 
 # Node with minimum value
     def min_node(self):
-        self._root.min_node()
+        return self._root.min_node()
 
 # Node with maximum value
     def max_node(self):
-        self._root.max_node()
+        return self._root.max_node()
 
 # Left -> Root -> Right
     def InOrderTraversal(self) -> list:
@@ -350,7 +350,10 @@ if __name__ == "__main__":
     b1.insert(35)
     b1.insert(10)
     b1.insert(19)
-    b1.delete(35)
     b1.insert(31)
     b1.insert(42)
+    print(b1.InOrderTraversal())
+    b1.delete(35)
+    print(b1.min_node().data)
+    print(b1.search(19))
     print(b1.InOrderTraversal())
