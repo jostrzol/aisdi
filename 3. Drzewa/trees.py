@@ -50,6 +50,14 @@ class BST_node:
         self.right = self.right.delete(min_larger_node.data)
         return self
 
+# Search Node
+    def search(self, data):
+        if self is None or self.data == data:
+            return self
+        if self.data < data:
+            return self.search(self.right, data)
+        return self.search(self.left, data)
+
 # Node with minimum value
     def min_node(self):
         current = self
@@ -133,6 +141,10 @@ class BST():
 # Delete Node
     def delete(self, data):
         self._root.delete(data)
+
+# Search Node
+    def search(self, data):
+        self._root.search(data)
 
 # Node with minimum value
     def min_node(self):
