@@ -89,7 +89,10 @@ class BST():
         return self._root.InOrderTraversal()
 
     def to_html(self, f: TextIOWrapper):
-        f.write('<!DOCTYPE html> <html lang="en" class="">  <head> 	<meta charset="UTF-8"> 	<link rel="stylesheet" href="tree.css"> </head>')
+        html_header = '<!DOCTYPE html> <html lang="en" class="">  <head> 	'
+        html_header += '<meta charset="UTF-8"> 	<link rel="stylesheet" href='
+        html_header += '"tree.css"> </head>'
+        f.write(html_header)
         f.write('<body>\n')
         f.write('<div class="tree">\n')
         f.write('<div class="canvas">\n')
@@ -142,20 +145,25 @@ class AVL_node(BST_node):
                 growth_point = parent._balance * grown_child._balance
 
                 if growth_point == 0:
-                    # grown_child._balance must have been 0, so now everything is balanced
+                    # grown_child._balance must have been 0,
+                    # so now everything is balanced
                     parent._balance = 0
                     self._balance = 0
                 elif growth_point > 0:
                     # grown tree is now in the "inner side" of self,
-                    # so parent must be unbalanced to the "inner side" and self is balanced;
-                    # inner side is left if self._balance == -1 and right if self._balance == 1
+                    # so parent must be unbalanced to the "inner side"
+                    # and self is balanced;
+                    # inner side is left if self._balance == -1
+                    # and right if self._balance == 1
 
                     parent._balance = self._balance
                     self._balance = 0
                 else:
                     # grown tree is now in the "inner side" of parent,
-                    # so self must be unbalanced to the "inner side" and parent is balanced;
-                    # inner side is left if parent._balance/2 == -1 and right if parent._balance/2 == 1
+                    # so self must be unbalanced to the "inner side"
+                    # and parent is balanced;
+                    # inner side is left if parent._balance/2 == -1
+                    # and right if parent._balance/2 == 1
 
                     self._balance = parent._balance/2
                     parent._balance = 0
@@ -165,7 +173,8 @@ class AVL_node(BST_node):
 
                 parent = grown_child  # grown_child comes on top
             else:
-                # self is between the unbalanced tree and parent, need one roation
+                # self is between the unbalanced tree and parent,
+                # need one roation
                 self._rotate()
                 parent._balance = 0
                 self._balance = 0
