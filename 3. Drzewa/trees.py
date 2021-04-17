@@ -50,6 +50,20 @@ class BST_node:
         self.right = self.right.delete(min_larger_node.data)
         return self
 
+# Node with minimum value
+    def min_node(self):
+        current = self
+        while current.left is not None:
+            current = current.left
+        return current
+
+# Node with maximum value
+    def max_node(self):
+        current = self
+        while current.right is not None:
+            current = current.right
+        return current
+
 # Left -> Root -> Right
     def InOrderTraversal(self) -> list:
         res = []
@@ -61,7 +75,7 @@ class BST_node:
         return res
 
 # Left -> Right -> Root
-    def PostOrderTraversal(self):
+    def PostOrderTraversal(self) -> list:
         res = []
         if self.left:
             res += self.left.PostOrderTraversal()
@@ -71,7 +85,7 @@ class BST_node:
         return res
 
 # Root -> Left -> Right
-    def PreOrderTraversal(self):
+    def PreOrderTraversal(self) -> list:
         res = [self.data]
         if self.left:
             res += self.left.PreOrderTraversal()
@@ -110,20 +124,33 @@ class BST():
     def __init__(self, data=None):
         self._root = BST_node(data)
 
+# Insert Node
     def insert(self, data):
         self._root.insert(data)
         if self._root.parent is not None:
             self._root = self._root.parent
 
+# Delete Node
     def delete(self, data):
         self._root.delete(data)
 
+# Node with minimum value
+    def min_node(self):
+        self._root.min_node()
+
+# Node with maximum value
+    def max_node(self):
+        self._root.max_node()
+
+# Left -> Root -> Right
     def InOrderTraversal(self) -> list:
         return self._root.InOrderTraversal()
 
+# Left -> Right -> Root
     def PostOrderTraversal(self) -> list:
         return self._root.PostOrderTraversal()
 
+# Root -> Left -> Right
     def PreOrderTraversal(self) -> list:
         return self._root.PreOrderTraversal()
 
