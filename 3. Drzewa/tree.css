@@ -2,6 +2,12 @@
     margin: 0;
     padding: 0;
 }
+.tree {
+    overflow-x: scroll;
+}
+.canvas {
+    min-width: 99999px;
+}
 
 .tree ul {
     padding-top: 20px;
