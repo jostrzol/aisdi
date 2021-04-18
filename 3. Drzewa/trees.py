@@ -11,9 +11,7 @@ class BST_node:
         self.data = data
         self.parent = parent
 
-
 # Insert Node
-
     def insert(self, data):
         if self.data:
             if data < self.data:
@@ -112,6 +110,7 @@ class BST_node:
             res += self.right.PreOrderTraversal()
         return res
 
+# Output tree data into a html file
     def to_html(self, f: TextIOWrapper):
         f.write(f"<a>{self.data}</a>\n")
         if self.left is None and self.right is None:
@@ -127,6 +126,7 @@ class BST_node:
             f.write("</li>\n")
         f.write("</ul>\n")
 
+# Output tree data into a xml file
     def to_xml(self, f: TextIOWrapper):
         f.write(f"<data>{self.data}</data>\n")
         if self.left is not None:
@@ -180,9 +180,10 @@ class BST():
     def PreOrderTraversal(self) -> list:
         return self._root.PreOrderTraversal()
 
+# Output tree data into a html file
     def to_html(self, f: TextIOWrapper):
-        html_head = ('<!DOCTYPE html> <html lang="en" class="">  <head> '
-                     '<meta charset="UTF-8"> 	<link rel="stylesheet" href='
+        html_head = ('<!DOCTYPE html> <html lang="en" class=""> <head> '
+                     '<meta charset="UTF-8"> <link rel="stylesheet" href='
                      '"tree.css"> </head>')
         f.write(html_head)
         f.write('<body>\n')
@@ -197,6 +198,7 @@ class BST():
         f.write('</div>\n')
         f.write('</body>\n')
 
+# Output tree data into a xml file
     def to_xml(self, f: TextIOWrapper):
         f.write('<tree>\n')
         self._root.to_xml(f)
@@ -338,9 +340,9 @@ class AVL_node(BST_node):
 
     def _fix_balance_delete(self) -> Tuple[AVL_node, bool]:
         """
-        fix balance od a node after shortening of one of its children
+        fix balance of a node after shortening of one of its children
         returns the node which ends up in self position after fixing
-        and wether the height of the tree shortened
+        and whether the height of the tree shortened
         """
         if abs(self._balance) <= 1:
             return self, self._balance == 0
@@ -356,7 +358,7 @@ class AVL_node(BST_node):
             grandchild = child.right
 
         if self._balance * child._balance < 0:
-            # grandchild is between child and self, need two roations
+            # grandchild is between child and self, need two rotations
             grandchild._rotate()
             grandchild._rotate()
 
@@ -369,13 +371,13 @@ class AVL_node(BST_node):
                 child._balance = 0
             elif balance_point > 0:
                 # "outer" child of grandchild is bigger than "inner" one
-                # the rest is same as smaller of the two
+                # the rest is the same as smaller of the two
 
                 self._balance = -grandchild._balance
                 child._balance = 0
             else:
                 # "inner" child of grandchild is bigger than "outer" one
-                # the rest is same as smaller of the two
+                # the rest is the same as smaller of the two
 
                 child._balance = -grandchild._balance
                 self._balance = 0
@@ -386,7 +388,7 @@ class AVL_node(BST_node):
             return grandchild, True  # grandchild comes on top
         else:
             # child is between granchild and self,
-            # need one roation
+            # need one rotation
             child._rotate()
 
             balance_point = self._balance * child._balance
@@ -484,7 +486,7 @@ class NoParentError(Exception):
         self.node: AVL_node = node
 
 
-# quick test
+# Quick test
 if __name__ == "__main__":
     seed('trees')
 
