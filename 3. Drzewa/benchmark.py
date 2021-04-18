@@ -2,16 +2,17 @@ from random import sample, seed
 from timeit import timeit
 from trees import BST, AVL
 from matplotlib import pyplot as plt
+from numpy import polyfit, array
 from typing import Dict
 
 SEED = "trees"
 START = 1
-END = 30001
+END = 300001
 REPEAT = 1
 
 MIN_N = 1000
-STEP_N = 1000
-MAX_N = 10000
+STEP_N = 5000
+MAX_N = 100000
 
 
 def time_insert(tree: BST, lst: list):
@@ -28,10 +29,22 @@ def time_delete(tree: BST, lst: list):
 
 def plot_benchmark(benchmark_bst: Dict[int, float],
                    benchmark_avl: Dict[int, float]):
+    bst_x = array(list(benchmark_bst.keys()))
+    bst_y = array(list(benchmark_bst.values()))
+
+    avl_x = array(list(benchmark_avl.keys()))
+    avl_y = array(list(benchmark_avl.values()))
+
     bst_plt, =  plt.plot(list(benchmark_bst.keys()), list(
         benchmark_bst.values()), "bo", label="BST")
+    bst_a, bst_b = polyfit(bst_x, bst_y, 1)
+    plt.plot(bst_x, (bst_a * bst_x), "b")
+
     avl_plt, = plt.plot(list(benchmark_avl.keys()), list(
         benchmark_avl.values()), "ro", label="AVL")
+    avl_a, avl_b = polyfit(avl_x, avl_y, 1)
+    plt.plot(avl_x, (avl_a * avl_x), "r")
+
     plt.legend(handles=[bst_plt, avl_plt])
 
 

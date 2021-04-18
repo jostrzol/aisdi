@@ -221,6 +221,7 @@ class AVL_node(BST_node):
         """
         fix balance of an unbalanced (self._balance == 2 or -2) node,
         which happened during insertion
+
         returns the node which ends up in self position after fixing
         """
         if abs(self._balance) <= 1:
