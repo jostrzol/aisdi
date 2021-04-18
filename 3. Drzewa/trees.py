@@ -489,7 +489,7 @@ if __name__ == "__main__":
     seed('trees')
 
     a = AVL()
-    lst = sample(range(3000), 200)
+    lst = sample(range(3000), 1000)
     for el in lst:
         a.insert(el)
     with open('AVL.html', 'w') as f:
