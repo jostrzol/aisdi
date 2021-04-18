@@ -2,7 +2,7 @@ from random import sample, seed
 from timeit import timeit
 from trees import BST, AVL
 from matplotlib import pyplot as plt
-from typing import Dict, List
+from typing import Dict
 
 SEED = "trees"
 START = 1
@@ -26,7 +26,8 @@ def time_delete(tree: BST, lst: list):
     return timeit(lambda: [tree.delete(el) for el in lst], number=REPEAT)
 
 
-def plot_benchmark(benchmark_bst: Dict[int, float], benchmark_avl: Dict[int, float]):
+def plot_benchmark(benchmark_bst: Dict[int, float],
+                   benchmark_avl: Dict[int, float]):
     bst_plt, =  plt.plot(list(benchmark_bst.keys()), list(
         benchmark_bst.values()), "bo", label="BST")
     avl_plt, = plt.plot(list(benchmark_avl.keys()), list(
