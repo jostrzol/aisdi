@@ -18,12 +18,12 @@ def time_insert(tree: BST, lst: list):
     return timeit(lambda: [tree.insert(el) for el in lst], number=REPEAT)
 
 
-def time_find(tree: BST, lst: list):
-    return timeit(lambda: [tree.find(el) for el in lst], number=REPEAT)
+def time_search(tree: BST, lst: list):
+    return timeit(lambda: [tree.search(el) for el in lst], number=REPEAT)
 
 
-def time_remove(tree: BST, lst: list):
-    return timeit(lambda: [tree.remove(el) for el in lst], number=REPEAT)
+def time_delete(tree: BST, lst: list):
+    return timeit(lambda: [tree.delete(el) for el in lst], number=REPEAT)
 
 
 def plot_benchmark(benchmark_bst: Dict[int, float], benchmark_avl: Dict[int, float]):
@@ -55,22 +55,26 @@ if __name__ == "__main__":
     with open("AVL.html", "w") as f:
         avls[1000].to_html(f)
 
-    t_find_bst = {n: time_find(tree, sample_list[:n])
-                  for n, tree in bsts.items()}
-    t_find_avl = {n: time_find(tree, sample_list[:n])
-                  for n, tree in avls.items()}
-    plt.ylabel("time to find elements in tree [s]")
-    plt.xlabel("number of elements to find in tree []")
-    plot_benchmark(t_find_bst, t_find_avl)
-    plt.savefig("plots/find.jpg")
+    t_search_bst = {n: time_search(tree, sample_list[:n])
+                    for n, tree in bsts.items()}
+    t_search_avl = {n: time_search(tree, sample_list[:n])
+                    for n, tree in avls.items()}
+    plt.ylabel("time to search for elements in tree [s]")
+    plt.xlabel("number of elements to search for in tree []")
+    plot_benchmark(t_search_bst, t_search_avl)
+    plt.savefig("plots/search.jpg")
     plt.close()
 
-    t_remove_bst = {n: time_remove(tree, sample_list[:n])
+    t_delete_bst = {n: time_delete(tree, sample_list[:n])
                     for n, tree in bsts.items()}
-    t_remove_avl = {n: time_remove(tree, sample_list[:n])
+    t_delete_avl = {n: time_delete(tree, sample_list[:n])
                     for n, tree in avls.items()}
-    plt.ylabel("time to remove elements in tree [s]")
-    plt.xlabel("number of elements to remove in tree []")
-    plot_benchmark(t_remove_bst, t_remove_avl)
-    plt.savefig("plots/remove.jpg")
+    plt.ylabel("time to delete elements in tree [s]")
+    plt.xlabel("number of elements to delete in tree []")
+    plot_benchmark(t_delete_bst, t_delete_avl)
+    plt.savefig("plots/delete.jpg")
     plt.close()
+    with open("BST-deleted.html", "w") as f:
+        bsts[1000].to_html(f)
+    with open("AVL-deleted.html", "w") as f:
+        avls[1000].to_html(f)

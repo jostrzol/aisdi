@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Optional
+from typing import Optional, Tuple
 from random import sample, seed
 from io import TextIOWrapper
 
@@ -11,17 +11,19 @@ class BST_node:
         self.data = data
         self.parent = parent
 
+
 # Insert Node
+
     def insert(self, data):
         if self.data:
             if data < self.data:
                 if self.left is None:
-                    self.left = BST_node(data, parent=self.left)
+                    self.left = BST_node(data, parent=self)
                 else:
                     self.left.insert(data)
             elif data > self.data:
                 if self.right is None:
-                    self.right = BST_node(data, parent=self.right)
+                    self.right = BST_node(data, parent=self)
                 else:
                     self.right.insert(data)
         else:
@@ -29,34 +31,43 @@ class BST_node:
 
 # Delete Node
     def delete(self, data):
-        if self is None:
-            return self
         if data < self.data:
             if self.left:
                 self.left = self.left.delete(data)
+                if self.left is not None:
+                    self.left.parent = self
             return self
         if data > self.data:
             if self.right:
                 self.right = self.right.delete(data)
+                if self.right is not None:
+                    self.right.parent = self
             return self
         if self.right is None:
             return self.left
         if self.left is None:
             return self.right
-        min_larger_node = self.right
-        while min_larger_node.left:
-            min_larger_node = min_larger_node.left
+        min_larger_node = self.right.min_node()
+        min_larger_node.parent = min_larger_node.parent.delete(
+            min_larger_node.data)
         self.data = min_larger_node.data
-        self.right = self.right.delete(min_larger_node.data)
         return self
 
 # Search Node
     def search(self, data):
-        if self is None or self.data == data:
+        if self.data == data:
             return self
+
         if self.data < data:
-            return self.right.search(data)
-        return self.left.search(data)
+            if self.right is not None:
+                return self.right.search(data)
+            else:
+                return None
+
+        if self.right is not None:
+            return self.left.search(data)
+        else:
+            return None
 
 # Node with minimum value
     def min_node(self):
@@ -140,7 +151,10 @@ class BST():
 
 # Delete Node
     def delete(self, data):
-        self._root.delete(data)
+        self._root = self._root.delete(data)
+        if self._root is None:
+            self._root = BST_node(None)
+        self._root.parent = None
 
 # Search Node
     def search(self, data):
@@ -167,10 +181,10 @@ class BST():
         return self._root.PreOrderTraversal()
 
     def to_html(self, f: TextIOWrapper):
-        html_header = '<!DOCTYPE html> <html lang="en" class="">  <head> 	'
-        html_header += '<meta charset="UTF-8"> 	<link rel="stylesheet" href='
-        html_header += '"tree.css"> </head>'
-        f.write(html_header)
+        html_head = ('<!DOCTYPE html> <html lang="en" class="">  <head> '
+                     '<meta charset="UTF-8"> 	<link rel="stylesheet" href='
+                     '"tree.css"> </head>')
+        f.write(html_head)
         f.write('<body>\n')
         f.write('<div class="tree">\n')
         f.write('<div class="canvas">\n')
@@ -196,71 +210,92 @@ class AVL_node(BST_node):
         self.left: AVL_node
         self.right: AVL_node
         self._balance = 0
+        # if parent is not None:
+        #     self.height = self.parent.height
+        # else:
+        #     self.height = 0
 
-    def _propagate_balance(self):
-        parent = self.parent
-        if parent is None:
-            return
+    def _fix_balance_insert(self):
+        """
+        fix balance of an unbalanced (self._balance == 2 or -2) node,
+        which happened during insertion
+        returns the node which ends up in self position after fixing
+        """
+        if abs(self._balance) <= 1:
+            return self
 
-        grown_child = None
-        if self._balance == -1:
-            grown_child = self.left
-        elif self._balance == 1:
-            grown_child = self.right
-
-        if self is parent.left:
-            parent._balance -= 1
+        if self._balance < 0:
+            child = self.left
         else:
-            parent._balance += 1
+            child = self.right
 
-        if abs(parent._balance) > 1:
-            if parent._balance * self._balance < 0:
-                # unbalanced tree is between self and parent, need two roations
-                grown_child._rotate()
-                grown_child._rotate()
+        if child._balance < 0:
+            grandchild = child.left
+        else:
+            grandchild = child.right
 
-                growth_point = parent._balance * grown_child._balance
+        if self._balance * child._balance < 0:
+            # grandchild is between child and self, need two roations
+            grandchild._rotate()
+            grandchild._rotate()
 
-                if growth_point == 0:
-                    # grown_child._balance must have been 0,
-                    # so now everything is balanced
-                    parent._balance = 0
-                    self._balance = 0
-                elif growth_point > 0:
-                    # grown tree is now in the "inner side" of self,
-                    # so parent must be unbalanced to the "inner side"
-                    # and self is balanced;
-                    # inner side is left if self._balance == -1
-                    # and right if self._balance == 1
+            growth_point = self._balance * grandchild._balance
 
-                    parent._balance = self._balance
-                    self._balance = 0
-                else:
-                    # grown tree is now in the "inner side" of parent,
-                    # so self must be unbalanced to the "inner side"
-                    # and parent is balanced;
-                    # inner side is left if parent._balance/2 == -1
-                    # and right if parent._balance/2 == 1
-
-                    self._balance = parent._balance/2
-                    parent._balance = 0
-
-                # either way grown_child is on top and is balanced
-                grown_child._balance = 0
-
-                parent = grown_child  # grown_child comes on top
-            else:
-                # self is between the unbalanced tree and parent,
-                # need one roation
-                self._rotate()
-                parent._balance = 0
+            if growth_point == 0:
+                # grandchild._balance must have been 0,
+                # so now everything is balanced
                 self._balance = 0
-                parent = self  # self comes on top
+                child._balance = 0
+            elif growth_point > 0:
+                # grown tree is now in the "inner side" of child,
+                # so self must be unbalanced to the "inner side"
+                # and child is balanced;
+                # inner side is left if child._balance == -1
+                # and right if child._balance == 1
 
-        if parent is not None and parent._balance != 0:
-            parent._propagate_balance()
+                self._balance = child._balance
+                child._balance = 0
+            else:
+                # grown tree is now in the "inner side" of self,
+                # so child must be unbalanced to the "inner side"
+                # and self is balanced;
+                # inner side is left if self._balance//2 == -1
+                # and right if self._balance//2 == 1
+
+                child._balance = self._balance//2
+                self._balance = 0
+
+            # either way grandchild is on top and is balanced
+            grandchild._balance = 0
+
+            return grandchild  # grandchild comes on top
+        else:
+            # child is between granchild and self,
+            # need one roation
+            child._rotate()
+            self._balance = 0
+            child._balance = 0
+            return child  # child comes on top
+
+    def _propagate_balance_insert(self, change):
+
+        self._balance += change
+        self = self._fix_balance_insert()
+
+        if self.parent is not None and self._balance != 0:
+            if self is self.parent.left:
+                change = -1
+            else:
+                change = 1
+
+            self.parent._propagate_balance_insert(change)
+        else:
+            return self
 
     def _rotate(self):
+        """
+        rotate self around self.parent
+        """
         if self.parent is None:
             raise NoParentError(self)
         parent = self.parent
@@ -289,22 +324,158 @@ class AVL_node(BST_node):
             if data < self.data:
                 if self.left is None:
                     self.left = AVL_node(data, parent=self)
-                    self.left._propagate_balance()
+                    self._propagate_balance_insert(-1)
                 else:
                     self.left.insert(data)
             elif data > self.data:
                 if self.right is None:
                     self.right = AVL_node(data, parent=self)
-                    self.right._propagate_balance()
+                    self._propagate_balance_insert(1)
                 else:
                     self.right.insert(data)
         else:
             self.data = data
 
+    def _fix_balance_delete(self) -> Tuple[AVL_node, bool]:
+        """
+        fix balance od a node after shortening of one of its children
+        returns the node which ends up in self position after fixing
+        and wether the height of the tree shortened
+        """
+        if abs(self._balance) <= 1:
+            return self, self._balance == 0
+
+        if self._balance < 0:
+            child = self.left  # right was shortened
+        else:
+            child = self.right  # left was shortened
+
+        if child._balance < 0:
+            grandchild = child.left
+        else:
+            grandchild = child.right
+
+        if self._balance * child._balance < 0:
+            # grandchild is between child and self, need two roations
+            grandchild._rotate()
+            grandchild._rotate()
+
+            balance_point = self._balance * grandchild._balance
+
+            if balance_point == 0:
+                # grandchild._balance must have been 0,
+                # so now everything is balanced
+                self._balance = 0
+                child._balance = 0
+            elif balance_point > 0:
+                # "outer" child of grandchild is bigger than "inner" one
+                # the rest is same as smaller of the two
+
+                self._balance = -grandchild._balance
+                child._balance = 0
+            else:
+                # "inner" child of grandchild is bigger than "outer" one
+                # the rest is same as smaller of the two
+
+                child._balance = -grandchild._balance
+                self._balance = 0
+
+            # either way grandchild is on top and is balanced
+            grandchild._balance = 0
+
+            return grandchild, True  # grandchild comes on top
+        else:
+            # child is between granchild and self,
+            # need one roation
+            child._rotate()
+
+            balance_point = self._balance * child._balance
+
+            if balance_point > 0:
+                # the "outer" child of child is bigger than the "inner" one
+
+                self._balance = 0
+                child._balance = 0
+                return child, True  # child comes on top
+            else:
+                # the "inner" and "outer" children of child are equally big
+
+                child._balance = -self._balance//2
+                self._balance = self._balance//2
+                return child, False  # child comes on top
+
+    def _propagate_balance_delete(self, change):
+
+        self._balance -= change
+        self, changed = self._fix_balance_delete()
+
+        if self.parent is not None and changed:
+            if self is self.parent.left:
+                change = -1
+            else:
+                change = 1
+
+            self.parent._propagate_balance_delete(change)
+
+    def delete(self, data):
+        if data < self.data:
+            if self.left:
+                new_left, should_replace = self.left.delete(data)
+                if should_replace:
+                    self.left = new_left
+                    if self.left is not None:
+                        self.left.parent = self
+                    self._propagate_balance_delete(-1)
+                return None, False
+        if data > self.data:
+            if self.right:
+                new_right, should_replace = self.right.delete(data)
+                if should_replace:
+                    self.right = new_right
+                    if self.right is not None:
+                        self.right.parent = self
+                    self._propagate_balance_delete(1)
+                return None, False
+
+        if self.right is None:
+            return self.left, True
+        if self.left is None:
+            return self.right, True
+        min_larger_node = self.right.min_node()
+        min_larger_node.parent, _ = min_larger_node.parent.delete(
+            min_larger_node.data)
+        self.data = min_larger_node.data
+        return None, False
+
+    def to_html(self, f: TextIOWrapper):
+        f.write(f"<a>{self.data}/{self._balance}</a>\n")
+        if self.left is None and self.right is None:
+            return
+        f.write("<ul>\n")
+        if self.left is not None:
+            f.write("<li>\n")
+            self.left.to_html(f)
+            f.write("</li>\n")
+        if self.right is not None:
+            f.write("<li>\n")
+            self.right.to_html(f)
+            f.write("</li>\n")
+        f.write("</ul>\n")
+
 
 class AVL(BST):
     def __init__(self, data=None):
         self._root = AVL_node(data)
+
+    def delete(self, data):
+        new_root, should_replace = self._root.delete(data)
+        if should_replace:
+            self._root = new_root
+            if self._root is None:
+                self._root = AVL_node(None)
+            self._root.parent = None
+        if self._root.parent is not None:
+            self._root = self._root.parent
 
 
 class NoParentError(Exception):
@@ -317,43 +488,51 @@ class NoParentError(Exception):
 if __name__ == "__main__":
     seed('trees')
 
-    # a1 = AVL(27)
-    # a1.insert(14)
-    # a1.insert(35)
-    # a1.insert(16)
-    # a1.insert(15)
-    # a1.insert(31)
-    # a1.insert(42)
-    # print(a1.InOrderTraversal())
-
     a = AVL()
-    for i in sample(range(3000), 80):
-        a.insert(i)
-
-    print(a.InOrderTraversal())
+    lst = sample(range(3000), 200)
+    for el in lst:
+        a.insert(el)
     with open('AVL.html', 'w') as f:
         a.to_html(f)
     with open('AVL.xml', 'w') as f:
         a.to_xml(f)
+    for i, el in enumerate(lst[len(lst)//4:len(lst)*3//4]):
+        a.delete(el)
+        # with open(f'{i}|AVL-{el}.html', 'w') as f:
+        #     a.to_html(f)
 
-    a2 = AVL(27)
-    a2.insert(14)
-    a2.insert(35)
-    a2.insert(10)
-    a2.insert(9)
-    a2.insert(31)
-    a2.insert(42)
-    print(a2.InOrderTraversal())
+    with open('AVL-deleted.html', 'w') as f:
+        a.to_html(f)
+    with open('AVL-deleted.xml', 'w') as f:
+        a.to_xml(f)
 
-    b1 = BST(27)
-    b1.insert(14)
-    b1.insert(35)
-    b1.insert(10)
-    b1.insert(19)
-    b1.insert(31)
-    b1.insert(42)
-    print(b1.InOrderTraversal())
-    b1.delete(35)
-    print(b1.min_node().data)
-    print(b1.search(19))
-    print(b1.InOrderTraversal())
+    # b2 = BST(2)
+    # b2.insert(3)
+    # a2 = AVL(2)
+    # a2.insert(3)
+
+    # b2.delete(2)
+    # b2.delete(3)
+    # b2.insert(6)
+    # a2.delete(2)
+    # a2.delete(3)
+    # a2.insert(6)
+    # pass
+
+    # b1 = AVL(27)
+    # b1.insert(14)
+    # b1.insert(35)
+    # b1.insert(10)
+    # b1.insert(19)
+    # b1.insert(31)
+    # b1.insert(42)
+    # print(b1.InOrderTraversal())
+    # b1.delete(35)
+    # b1.delete(36)
+    # print(b1.min_node().data)
+    # print(b1.search(19))
+    # print(b1.search(20))
+    # print(b1.InOrderTraversal())
+
+    # b1.delete(27)
+    # print(b1.InOrderTraversal())
