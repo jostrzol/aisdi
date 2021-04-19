@@ -168,15 +168,15 @@ class BST():
     def max_node(self):
         return self._root.max_node()
 
-# Left -> Root -> Right
+# Left -> Self -> Right
     def InOrderTraversal(self) -> list:
         return self._root.InOrderTraversal()
 
-# Left -> Right -> Root
+# Left -> Right -> Self
     def PostOrderTraversal(self) -> list:
         return self._root.PostOrderTraversal()
 
-# Root -> Left -> Right
+# Self -> Left -> Right
     def PreOrderTraversal(self) -> list:
         return self._root.PreOrderTraversal()
 
