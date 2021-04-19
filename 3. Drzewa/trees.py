@@ -214,10 +214,6 @@ class AVL_node(BST_node):
         self.left: AVL_node
         self.right: AVL_node
         self._balance = 0
-        # if parent is not None:
-        #     self.height = self.parent.height
-        # else:
-        #     self.height = 0
 
     def _fix_balance_insert(self) -> AVL_node:
         """
@@ -524,34 +520,3 @@ if __name__ == "__main__":
         a.to_html(f)
     with open(f'{GRAPH_DIR}AVL-deleted.xml', 'w') as f:
         a.to_xml(f)
-
-    # b2 = BST(2)
-    # b2.insert(3)
-    # a2 = AVL(2)
-    # a2.insert(3)
-
-    # b2.delete(2)
-    # b2.delete(3)
-    # b2.insert(6)
-    # a2.delete(2)
-    # a2.delete(3)
-    # a2.insert(6)
-    # pass
-
-    # b1 = AVL(27)
-    # b1.insert(14)
-    # b1.insert(35)
-    # b1.insert(10)
-    # b1.insert(19)
-    # b1.insert(31)
-    # b1.insert(42)
-    # print(b1.InOrderTraversal())
-    # b1.delete(35)
-    # b1.delete(36)
-    # print(b1.min_node().data)
-    # print(b1.search(19))
-    # print(b1.search(20))
-    # print(b1.InOrderTraversal())
-
-    # b1.delete(27)
-    # print(b1.InOrderTraversal())
