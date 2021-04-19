@@ -83,7 +83,7 @@ class BST_node:
             current = current.right
         return current
 
-# Left -> Root -> Right
+# Left -> Self -> Right
     def InOrderTraversal(self) -> list:
         res = []
         if self.left:
@@ -93,7 +93,7 @@ class BST_node:
             res = res + self.right.InOrderTraversal()
         return res
 
-# Left -> Right -> Root
+# Left -> Right -> Self
     def PostOrderTraversal(self) -> list:
         res = []
         if self.left:
@@ -103,7 +103,7 @@ class BST_node:
         res.append(self.data)
         return res
 
-# Root -> Left -> Right
+# Self -> Left -> Right
     def PreOrderTraversal(self) -> list:
         res = [self.data]
         if self.left:
