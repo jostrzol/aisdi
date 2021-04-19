@@ -3,7 +3,7 @@ from typing import Optional, Tuple
 from random import sample, seed
 from io import TextIOWrapper
 
-GRAPH_DIR = "graph/"
+GRAPH_DIR = "test_graph/"
 
 
 class BST_node:
@@ -30,7 +30,7 @@ class BST_node:
             self.data = data
 
 # Delete Node
-    def delete(self, data):
+    def delete(self, data) -> BST_node:
         if data < self.data:
             if self.left:
                 self.left = self.left.delete(data)
@@ -54,7 +54,7 @@ class BST_node:
         return self
 
 # Search Node
-    def search(self, data):
+    def search(self, data) -> BST_node:
         if self.data == data:
             return self
 
@@ -70,14 +70,14 @@ class BST_node:
             return None
 
 # Node with minimum value
-    def min_node(self):
+    def min_node(self) -> BST_node:
         current = self
         while current.left is not None:
             current = current.left
         return current
 
 # Node with maximum value
-    def max_node(self):
+    def max_node(self) -> BST_node:
         current = self
         while current.right is not None:
             current = current.right
@@ -128,7 +128,7 @@ class BST_node:
             f.write("</li>\n")
         f.write("</ul>\n")
 
-# Output tree data into a xml file
+# Output tree data into an xml file
     def to_xml(self, f: TextIOWrapper):
         f.write(f"<data>{self.data}</data>\n")
         if self.left is not None:
@@ -159,15 +159,15 @@ class BST():
         self._root.parent = None
 
 # Search Node
-    def search(self, data):
+    def search(self, data) -> BST_node:
         return self._root.search(data)
 
 # Node with minimum value
-    def min_node(self):
+    def min_node(self) -> BST_node:
         return self._root.min_node()
 
 # Node with maximum value
-    def max_node(self):
+    def max_node(self) -> BST_node:
         return self._root.max_node()
 
 # Left -> Self -> Right
@@ -200,7 +200,7 @@ class BST():
         f.write('</div>\n')
         f.write('</body>\n')
 
-# Output tree data into a xml file
+# Output tree data into an xml file
     def to_xml(self, f: TextIOWrapper):
         f.write('<tree>\n')
         self._root.to_xml(f)
@@ -219,7 +219,7 @@ class AVL_node(BST_node):
         # else:
         #     self.height = 0
 
-    def _fix_balance_insert(self):
+    def _fix_balance_insert(self) -> AVL_node:
         """
         fix balance of an unbalanced (self._balance == 2 or -2) node,
         which happened during insertion
@@ -283,6 +283,12 @@ class AVL_node(BST_node):
             return child  # child comes on top
 
     def _propagate_balance_insert(self, change):
+        """
+        propagate balance change after insertion
+        change indicates the side on which insertion occured
+
+        returns the node that ends up in the position that self was before
+        """
 
         self._balance += change
         self = self._fix_balance_insert()
@@ -344,6 +350,7 @@ class AVL_node(BST_node):
     def _fix_balance_delete(self) -> Tuple[AVL_node, bool]:
         """
         fix balance of a node after shortening of one of its children
+
         returns the node which ends up in self position after fixing
         and whether the height of the tree shortened
         """
@@ -409,8 +416,13 @@ class AVL_node(BST_node):
                 self._balance = self._balance//2
                 return child, False  # child comes on top
 
-    def _propagate_balance_delete(self, change):
+    def _propagate_balance_delete(self, change) -> AVL_node:
+        """
+        propagate balance change after deletion
+        change indicates the side on which deletion occured
 
+        returns the node that ends up in the position that self was before
+        """
         self._balance -= change
         self, changed = self._fix_balance_delete()
 
@@ -421,8 +433,10 @@ class AVL_node(BST_node):
                 change = 1
 
             self.parent._propagate_balance_delete(change)
+        else:
+            return self
 
-    def delete(self, data):
+    def delete(self, data) -> Tuple[Optional[AVL_node], bool]:
         if data < self.data:
             if self.left:
                 new_left, should_replace = self.left.delete(data)
@@ -497,14 +511,14 @@ if __name__ == "__main__":
     lst = sample(range(3000), 1000)
     for el in lst:
         a.insert(el)
-    with open('AVL.html', 'w') as f:
+    with open(f'{GRAPH_DIR}AVL.html', 'w') as f:
         a.to_html(f)
-    with open('AVL.xml', 'w') as f:
+    with open(f'{GRAPH_DIR}AVL.xml', 'w') as f:
         a.to_xml(f)
     for i, el in enumerate(lst[len(lst)//4:len(lst)*3//4]):
         a.delete(el)
-        # with open(f'{GRAPH_DIR}{i}|AVL-{el}.html', 'w') as f:
-        #     a.to_html(f)
+        with open(f'{GRAPH_DIR}{i}|AVL-{el}.html', 'w') as f:
+            a.to_html(f)
 
     with open(f'{GRAPH_DIR}AVL-deleted.html', 'w') as f:
         a.to_html(f)
