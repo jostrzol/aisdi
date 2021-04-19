@@ -151,5 +151,5 @@ dmypy.json
 ### vscode ###
 !.vscode/extensions.json
 
-3. Drzewa/*.html
-3. Drzewa/*.xml
+#3. Drzewa/*.html
+#3. Drzewa/*.xml
