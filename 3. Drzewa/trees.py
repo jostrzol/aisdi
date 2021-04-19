@@ -3,6 +3,8 @@ from typing import Optional, Tuple
 from random import sample, seed
 from io import TextIOWrapper
 
+GRAPH_DIR = "graph/"
+
 
 class BST_node:
     def __init__(self, data, parent: Optional[BST_node] = None):
@@ -501,12 +503,12 @@ if __name__ == "__main__":
         a.to_xml(f)
     for i, el in enumerate(lst[len(lst)//4:len(lst)*3//4]):
         a.delete(el)
-        # with open(f'{i}|AVL-{el}.html', 'w') as f:
+        # with open(f'{GRAPH_DIR}{i}|AVL-{el}.html', 'w') as f:
         #     a.to_html(f)
 
-    with open('AVL-deleted.html', 'w') as f:
+    with open(f'{GRAPH_DIR}AVL-deleted.html', 'w') as f:
         a.to_html(f)
-    with open('AVL-deleted.xml', 'w') as f:
+    with open(f'{GRAPH_DIR}AVL-deleted.xml', 'w') as f:
         a.to_xml(f)
 
     # b2 = BST(2)

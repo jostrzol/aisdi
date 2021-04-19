@@ -17,6 +17,8 @@ MIN_N = 1000
 STEP_N = 5000
 MAX_N = 100000
 
+GRAPH_DIR = "graph/"
+
 
 def time_insert(tree: BST, lst: list):
     return timeit(lambda: [tree.insert(el) for el in lst], number=REPEAT)
@@ -70,13 +72,13 @@ if __name__ == "__main__":
     plot_benchmark(t_insert_bst, t_insert_avl)
     plt.savefig("plots/insert.jpg")
     plt.close()
-    with open("BST.html", "w") as f:
+    with open(f"{GRAPH_DIR}BST.html", "w") as f:
         bsts[1000].to_html(f)
-    with open("AVL.html", "w") as f:
+    with open(f"{GRAPH_DIR}AVL.html", "w") as f:
         avls[1000].to_html(f)
-    with open("BST.xml", "w") as f:
+    with open(f"{GRAPH_DIR}BST.xml", "w") as f:
         bsts[1000].to_xml(f)
-    with open("AVL.xml", "w") as f:
+    with open(f"{GRAPH_DIR}AVL.xml", "w") as f:
         avls[1000].to_xml(f)
 
     t_search_bst = {n: time_search(tree, sample_list[:n])
@@ -100,11 +102,11 @@ if __name__ == "__main__":
     plot_benchmark(t_delete_bst, t_delete_avl)
     plt.savefig("plots/delete.jpg")
     plt.close()
-    with open("BST-deleted.html", "w") as f:
+    with open(f"{GRAPH_DIR}BST-deleted.html", "w") as f:
         bsts[1000].to_html(f)
-    with open("AVL-deleted.html", "w") as f:
+    with open(f"{GRAPH_DIR}AVL-deleted.html", "w") as f:
         avls[1000].to_html(f)
-    with open("BST-deleted.xml", "w") as f:
+    with open(f"{GRAPH_DIR}BST-deleted.xml", "w") as f:
         bsts[1000].to_xml(f)
-    with open("AVL-deleted.xml", "w") as f:
+    with open(f"{GRAPH_DIR}AVL-deleted.xml", "w") as f:
         avls[1000].to_xml(f)
