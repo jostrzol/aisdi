@@ -1,12 +1,12 @@
 from random import sample, seed
 from timeit import timeit
-
-from numpy.lib.polynomial import poly1d
-from heap import Heap
-from matplotlib import pyplot as plt
 from numpy import polyfit, array
+from numpy.lib.polynomial import poly1d
 from math import log2
+from matplotlib import pyplot as plt
 from typing import Dict, List, Tuple
+
+from heap import Heap
 
 SEED = "trees"
 START = 1
@@ -22,11 +22,13 @@ PLOT_DIR = "plots/"
 
 
 def time_insert(heap: Heap, lst: list):
-    return timeit(lambda: [heap.insert(el) for el in lst], number=REPEAT)
+    return timeit(lambda: [heap.insert(el) for el in lst],
+                  number=REPEAT)
 
 
 def time_extract_max(heap: Heap):
-    return timeit(lambda: [heap.extract_max() for _ in range(len(heap))], number=REPEAT)
+    return timeit(lambda: [heap.extract_max() for _ in range(len(heap))],
+                  number=REPEAT)
 
 
 def plot_benchmark(benchmarks: List[Tuple[Dict[int, float], str]]):
