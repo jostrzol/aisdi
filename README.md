@@ -8,7 +8,7 @@
 
 [3. Drzewa](3.%20Drzewa/reference/Drzewa.pdf)
 
-[4. Kopce](4.%20Kopce/reference/placeholder.txt)
+[4. Kopce](4.%20Kopce/reference/Kopce.pdf)
 
 [5. Wyszukiwanie Wzorca](5.%20Wyszukiwanie%20Wzorca/reference/placeholder.txt)
 
