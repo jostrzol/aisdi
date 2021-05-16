@@ -10,7 +10,7 @@ class StringSearching:
 
         Returns:
             List of positions in ascending order of
-            the beginnings of "substring" in "text".
+            the beginnings of "pat" in "txt".
         """
         self._text = txt
         self._pattern = pat
