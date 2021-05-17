@@ -34,18 +34,22 @@ class StringSearching:
                 j += 1
 
             if (j == M):
-                # return index at which
-                # the pattern starts
-                return i
+                # return the pattern's
+                # indexes in text
+                return list(range(i, (i + M)))
 
-    def find_kmp(self):
+    def find_kmp(self) -> List[int]:
         """
         Knuth–Morris–Pratt algorithm
         """
         pass
 
-    def find_kr(self):
+    def find_kr(self) -> List[int]:
         """
         Rabin–Karp algorithm
         """
         pass
+
+
+string1 = StringSearching("abcABC123qwerty", "qwe")
+print(string1.find_n())  # should print out "[9, 10, 11]"
