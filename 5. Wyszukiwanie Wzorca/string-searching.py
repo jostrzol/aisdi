@@ -78,7 +78,12 @@ class StringSearching:
         pass
 
     def compute_lps(self) -> List[int]:
-        # Longest Proper Prefix that is suffix array (LPS)
+        """
+        Longest Proper Prefix that is suffix array (LPS)
+        """
+        # Example:
+        #   Pattern:    "ACABACACD"
+        #   LPS:        [001012320]
         lps = [0] * len(self._pattern)
 
         prefix = 0
