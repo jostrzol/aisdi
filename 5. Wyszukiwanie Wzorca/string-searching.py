@@ -71,9 +71,9 @@ class StringSearching:
 
         return match_indices
 
-    def find_rk(self) -> List[int]:
+    def find_kr(self) -> List[int]:
         """
-        Rabin–Karp algorithm
+        Karp-Rabin algorithm
         """
         pass
 
@@ -81,25 +81,25 @@ class StringSearching:
         # Longest Proper Prefix that is suffix array (LPS)
         lps = [0] * len(self._pattern)
 
-        prefi = 0
+        prefix = 0
         for i in range(1, len(self._pattern)):
 
             # roll the prefix pointer back until match
             # or beginning of pattern is reached
-            while prefi and self._pattern[i] != self._pattern[prefi]:
-                prefi = lps[prefi - 1]
+            while prefix and self._pattern[i] != self._pattern[prefix]:
+                prefix = lps[prefix - 1]
 
             # if match, record the LSP for the
             # current 'i' and move prefix pointer
-            if self._pattern[prefi] == self._pattern[i]:
-                prefi += 1
-                lps[i] = prefi
+            if self._pattern[prefix] == self._pattern[i]:
+                prefix += 1
+                lps[i] = prefix
 
         return lps
 
 
-string1 = StringSearching("abcABC123qwertyqwer", "qwe")
+string1 = StringSearching("abcABC123qweqtyqweqweq", "qweq")
 
-# all should print out "[9, 15]"
+# all should print out "[9, 15, 18]"
 print(string1.find_n())
 print(string1.find_kmp())
