@@ -119,14 +119,60 @@ def find_kr(text: str, string: str) -> List[int]:
         List of positions in ascending order of
         the beginnings of "string" in "text".
     """
-    pass
+    match_indices = []
+    s_hash = hash_kr(string)
+
+    prevstr = ""
+    prevhash = None
+    for i in range(len(text) - len(string)+1):
+        text_slice = text[i:i+len(string)]
+        t_hash = hash_kr(text_slice, prevstr, prevhash)
+        if t_hash == s_hash and text_slice == string:
+            match_indices.append(i)
+
+        prevstr = text_slice
+        prevhash = t_hash
+
+    return match_indices
+
+
+def hash_kr(string: str, prevstr: str = "", prevhash: int = None, base=ord('ż') + 1, wordlength: int = 64):
+    """
+    Hashes the given string in constant time based on the previous hash
+    If no previous hash given, hash string
+
+    Parameters:
+        string:         string to hash
+        prevstr:        prevous value of this hash
+        base:           alphabet length
+        wordlength:     used to calculate modulo
+
+    Returns:
+        hash
+    """
+    mod = round(((1 << wordlength) - 1)/base)
+
+    # if no prev perform hash of the whole string
+    if prevhash is None:
+        hash = 0
+        for i, ch in enumerate(string[::-1]):
+            hash += ord(ch) * base**i % mod
+        return hash
+
+    # "remove" the first character
+    prevhash -= ord(prevstr[0]) * base**(len(prevstr)-1) % mod
+    # "shift" the string
+    prevhash *= base % mod
+    # "add" the new character
+    prevhash += ord(string[-1]) % mod
+    return prevhash
 
 
 # - - - - Quick tests - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
-
 text_1 = "abcABC123qweqtyqweqweq"
 string_1 = "qweq"
 
 # all should print out "[9, 15, 18]"
 print(find_n(text_1, string_1))
 print(find_kmp(text_1, string_1))
+print(find_kr(text_1, string_1))
