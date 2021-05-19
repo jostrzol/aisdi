@@ -1,7 +1,14 @@
 import string_searching
+import random
 
+
+RANDOM_TEXT_LEN = 1000
+RANDOM_STRING_LEN = 10
+RANDOM_REPEAT = 10
+SEED = "text"
 
 # - - - - Naive Search - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+
 
 def test_find_n_normal_case():
     text_1 = "abcABC123qweqtyqweqweq"
@@ -131,3 +138,22 @@ def test_find_kr_string_not_in_text():
     text_1 = "abcABC123qweqtyqweqweq"
     string_1 = "bella"
     assert(string_searching.find_kr(text_1, string_1) == [])
+
+# - - - - All algorithms - - - - - - - - - - - - - - - - - - - - - - - - - - #
+
+
+def test_all_random():
+    random.seed(SEED)
+    chars = ['a', 'b']
+    texts = ["".join(random.choices(chars, k=RANDOM_TEXT_LEN))
+             for _ in range(RANDOM_REPEAT)]
+    strings = ["".join(random.choices(chars, k=RANDOM_STRING_LEN))
+               for _ in range(RANDOM_REPEAT)]
+
+    algorithms = [string_searching.find_n,
+                  string_searching.find_kmp,
+                  string_searching.find_kr]
+
+    for text, string in zip(texts, strings):
+        results = [alg(string, text) for alg in algorithms]
+        assert(all(result == results[0] for result in results))
