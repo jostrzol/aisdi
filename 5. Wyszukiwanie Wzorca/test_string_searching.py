@@ -1,5 +1,4 @@
-import importlib
-string_searching = importlib.import_module("string-searching")
+import string_searching
 
 
 # - - - - Naive Search - - - - - - - - - - - - - - - - - - - - - - - - - - - #

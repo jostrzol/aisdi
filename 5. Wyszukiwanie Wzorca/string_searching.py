@@ -108,7 +108,7 @@ def compute_lps(string: str) -> List[int]:
 
 # - - - - Karp-Rabin algorithm - - - - - - - - - - - - - - - - - - - - - - - #
 
-def find_kr(text: str, string: str) -> List[int]:
+def find_kr(text: str, string: str, base=ord('ż') + 1, ) -> List[int]:
     """
     Karp-Rabin algorithm
 
