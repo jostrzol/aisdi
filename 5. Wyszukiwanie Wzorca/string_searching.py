@@ -108,7 +108,7 @@ def compute_lps(string: str) -> List[int]:
 
 # - - - - Karp-Rabin algorithm - - - - - - - - - - - - - - - - - - - - - - - #
 
-def find_kr(text: str, string: str, base=ord('ż') + 1, ) -> List[int]:
+def find_kr(text: str, string: str) -> List[int]:
     """
     Karp-Rabin algorithm
 
@@ -159,13 +159,13 @@ def hash_kr(string: str, prevstr: str = "", prevhash: int = None,
     if prevhash is None:
         hash = 0
         for i, ch in enumerate(string[::-1]):
-            hash += ord(ch) * base**i % mod
+            hash = (hash + ord(ch) * base**i) % mod
         return hash
 
     # "remove" the first character
-    prevhash -= ord(prevstr[0]) * base**(len(prevstr)-1) % mod
+    prevhash = (prevhash - ord(prevstr[0]) * base**(len(prevstr)-1)) % mod
     # "shift" the string
-    prevhash *= base % mod
+    prevhash = (prevhash * base) % mod
     # "add" the new character
-    prevhash += ord(string[-1]) % mod
+    prevhash = (prevhash + ord(string[-1])) % mod
     return prevhash

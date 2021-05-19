@@ -3,7 +3,7 @@ import random
 
 
 RANDOM_TEXT_LEN = 1000
-RANDOM_STRING_LEN = 10
+RANDOM_STRING_LEN = 8
 RANDOM_REPEAT = 10
 SEED = "text"
 
@@ -155,5 +155,16 @@ def test_all_random():
                   string_searching.find_kr]
 
     for text, string in zip(texts, strings):
-        results = [alg(string, text) for alg in algorithms]
-        assert(all(result == results[0] for result in results))
+
+        start = 0
+        ref = []
+        while True:
+            try:
+                i = text.index(string, start)
+                ref.append(i)
+                start = i + 1
+            except ValueError:
+                break
+
+        results = [alg(text, string) for alg in algorithms]
+        assert(all(result == ref for result in results))
