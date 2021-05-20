@@ -16,7 +16,8 @@ PLT_DIR = "plots/"
 SEED = "text"
 
 
-def alg_multiple(alg: Callable[[str, str], List[int]], text: str, strings: List[str]):
+def alg_multiple(alg: Callable[[str, str], List[int]],
+                 text: str, strings: List[str]):
     for string in strings:
         alg(text, string)
 

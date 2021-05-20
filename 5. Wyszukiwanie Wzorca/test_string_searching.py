@@ -7,8 +7,8 @@ RANDOM_STRING_LEN = 8
 RANDOM_REPEAT = 10
 SEED = "text"
 
-# - - - - Naive Search - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
+# - - - - Naive Search - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
 def test_find_n_normal_case():
     text_1 = "abcABC123qweqtyqweqweq"
@@ -139,8 +139,8 @@ def test_find_kr_string_not_in_text():
     string_1 = "bella"
     assert(string_searching.find_kr(text_1, string_1) == [])
 
-# - - - - All algorithms - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
+# - - - - All algorithms - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
 def test_all_random():
     random.seed(SEED)
