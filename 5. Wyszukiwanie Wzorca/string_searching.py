@@ -1,4 +1,8 @@
+from math import ceil, floor, sqrt
 from typing import List
+
+BASE: int = ord('ż') + 1
+MOD: int = 48416651112098513
 
 
 # - - - - Naive Search - - - - - - - - - - - - - - - - - - - - - - - - - - - #
@@ -138,8 +142,7 @@ def find_kr(text: str, string: str) -> List[int]:
     return match_indices
 
 
-def hash_kr(string: str, prevstr: str = "", prevhash: int = None,
-            base=ord('ż') + 1, wordlength: int = 64):
+def hash_kr(string: str, prevstr: str = "", prevhash: int = None):
     """
     Hashes the given string in constant time based on the previous hash
     If no previous hash given, hash string
@@ -147,25 +150,31 @@ def hash_kr(string: str, prevstr: str = "", prevhash: int = None,
     Parameters:
         string:         string to hash
         prevstr:        prevous value of this hash
-        base:           alphabet length
-        wordlength:     used to calculate modulo
 
     Returns:
         hash
     """
-    mod = round(((1 << wordlength) - 1)/base)
 
     # if no prev perform hash of the whole string
     if prevhash is None:
         hash = 0
         for i, ch in enumerate(string[::-1]):
-            hash = (hash + ord(ch) * base**i) % mod
+            hash = (hash + ord(ch) * BASE**i) % MOD
         return hash
 
     # "remove" the first character
-    prevhash = (prevhash - ord(prevstr[0]) * base**(len(prevstr)-1)) % mod
+    prevhash = (prevhash - ord(prevstr[0]) * BASE**(len(prevstr)-1)) % MOD
     # "shift" the string
-    prevhash = (prevhash * base) % mod
+    prevhash = (prevhash * BASE) % MOD
     # "add" the new character
-    prevhash = (prevhash + ord(string[-1])) % mod
+    prevhash = (prevhash + ord(string[-1])) % MOD
     return prevhash
+
+
+if __name__ == "__main__":
+    with open('reference/pan_tadeusz.txt') as f:
+        text = f.read()
+    string = 'Adam'
+    find_kr(text, string)
+    find_n(text, string)
+    find_kmp(text, string)

@@ -1,0 +1,1354 @@
+{
+    "machine_info": {
+        "node": "ogurczak",
+        "processor": "x86_64",
+        "machine": "x86_64",
+        "python_compiler": "GCC 9.3.0",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.8.5",
+        "python_version": "3.8.5",
+        "python_build": [
+            "default",
+            "Jan 27 2021 15:41:15"
+        ],
+        "release": "5.8.0-53-generic",
+        "system": "Linux",
+        "cpu": {
+            "vendor_id": "unknown",
+            "hardware": "unknown",
+            "brand": "unknown"
+        }
+    },
+    "commit_info": {
+        "id": "7245ffde81d75817312faddb51608790c58ade8a",
+        "time": "2021-05-19T16:45:23+02:00",
+        "author_time": "2021-05-19T16:45:23+02:00",
+        "dirty": true,
+        "project": "aisdi_lab",
+        "branch": "master"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_benchmark[100-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[100-find_n]",
+            "params": {
+                "size": 100,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "100-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 100
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 6.613135400002648,
+                "max": 6.613135400002648,
+                "mean": 6.613135400002648,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 6.613135400002648,
+                "iqr": 0.0,
+                "q1": 6.613135400002648,
+                "q3": 6.613135400002648,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 6.613135400002648,
+                "hd15iqr": 6.613135400002648,
+                "ops": 0.15121420317503248,
+                "total": 6.613135400002648,
+                "data": [
+                    6.613135400002648
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[100-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[100-find_kmp]",
+            "params": {
+                "size": 100,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "100-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 100
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.8234324880031636,
+                "max": 3.8234324880031636,
+                "mean": 3.8234324880031636,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 3.8234324880031636,
+                "iqr": 0.0,
+                "q1": 3.8234324880031636,
+                "q3": 3.8234324880031636,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 3.8234324880031636,
+                "hd15iqr": 3.8234324880031636,
+                "ops": 0.26154509152122174,
+                "total": 3.8234324880031636,
+                "data": [
+                    3.8234324880031636
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[100-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[100-find_kr]",
+            "params": {
+                "size": 100,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "100-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 100
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 40.955005509997136,
+                "max": 40.955005509997136,
+                "mean": 40.955005509997136,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 40.955005509997136,
+                "iqr": 0.0,
+                "q1": 40.955005509997136,
+                "q3": 40.955005509997136,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 40.955005509997136,
+                "hd15iqr": 40.955005509997136,
+                "ops": 0.02441703981106533,
+                "total": 40.955005509997136,
+                "data": [
+                    40.955005509997136
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[200-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[200-find_n]",
+            "params": {
+                "size": 200,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "200-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 200
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 13.001138359002653,
+                "max": 13.001138359002653,
+                "mean": 13.001138359002653,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 13.001138359002653,
+                "iqr": 0.0,
+                "q1": 13.001138359002653,
+                "q3": 13.001138359002653,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 13.001138359002653,
+                "hd15iqr": 13.001138359002653,
+                "ops": 0.07691634166077072,
+                "total": 13.001138359002653,
+                "data": [
+                    13.001138359002653
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[200-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[200-find_kmp]",
+            "params": {
+                "size": 200,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "200-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 200
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 7.646336657002394,
+                "max": 7.646336657002394,
+                "mean": 7.646336657002394,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 7.646336657002394,
+                "iqr": 0.0,
+                "q1": 7.646336657002394,
+                "q3": 7.646336657002394,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 7.646336657002394,
+                "hd15iqr": 7.646336657002394,
+                "ops": 0.13078158141051976,
+                "total": 7.646336657002394,
+                "data": [
+                    7.646336657002394
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[200-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[200-find_kr]",
+            "params": {
+                "size": 200,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "200-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 200
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 84.65078139000252,
+                "max": 84.65078139000252,
+                "mean": 84.65078139000252,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 84.65078139000252,
+                "iqr": 0.0,
+                "q1": 84.65078139000252,
+                "q3": 84.65078139000252,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 84.65078139000252,
+                "hd15iqr": 84.65078139000252,
+                "ops": 0.011813240038420988,
+                "total": 84.65078139000252,
+                "data": [
+                    84.65078139000252
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[300-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[300-find_n]",
+            "params": {
+                "size": 300,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "300-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 300
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 19.44477391599503,
+                "max": 19.44477391599503,
+                "mean": 19.44477391599503,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 19.44477391599503,
+                "iqr": 0.0,
+                "q1": 19.44477391599503,
+                "q3": 19.44477391599503,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 19.44477391599503,
+                "hd15iqr": 19.44477391599503,
+                "ops": 0.05142770002470497,
+                "total": 19.44477391599503,
+                "data": [
+                    19.44477391599503
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[300-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[300-find_kmp]",
+            "params": {
+                "size": 300,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "300-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 300
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 11.589931738002633,
+                "max": 11.589931738002633,
+                "mean": 11.589931738002633,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 11.589931738002633,
+                "iqr": 0.0,
+                "q1": 11.589931738002633,
+                "q3": 11.589931738002633,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 11.589931738002633,
+                "hd15iqr": 11.589931738002633,
+                "ops": 0.08628178513951597,
+                "total": 11.589931738002633,
+                "data": [
+                    11.589931738002633
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[300-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[300-find_kr]",
+            "params": {
+                "size": 300,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "300-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 300
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 127.4129017209998,
+                "max": 127.4129017209998,
+                "mean": 127.4129017209998,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 127.4129017209998,
+                "iqr": 0.0,
+                "q1": 127.4129017209998,
+                "q3": 127.4129017209998,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 127.4129017209998,
+                "hd15iqr": 127.4129017209998,
+                "ops": 0.00784849875085439,
+                "total": 127.4129017209998,
+                "data": [
+                    127.4129017209998
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[400-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[400-find_n]",
+            "params": {
+                "size": 400,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "400-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 400
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 25.996078555996064,
+                "max": 25.996078555996064,
+                "mean": 25.996078555996064,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 25.996078555996064,
+                "iqr": 0.0,
+                "q1": 25.996078555996064,
+                "q3": 25.996078555996064,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 25.996078555996064,
+                "hd15iqr": 25.996078555996064,
+                "ops": 0.038467340289266336,
+                "total": 25.996078555996064,
+                "data": [
+                    25.996078555996064
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[400-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[400-find_kmp]",
+            "params": {
+                "size": 400,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "400-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 400
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 15.543523568005185,
+                "max": 15.543523568005185,
+                "mean": 15.543523568005185,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 15.543523568005185,
+                "iqr": 0.0,
+                "q1": 15.543523568005185,
+                "q3": 15.543523568005185,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 15.543523568005185,
+                "hd15iqr": 15.543523568005185,
+                "ops": 0.06433547680645602,
+                "total": 15.543523568005185,
+                "data": [
+                    15.543523568005185
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[400-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[400-find_kr]",
+            "params": {
+                "size": 400,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "400-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 400
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 170.46086258099967,
+                "max": 170.46086258099967,
+                "mean": 170.46086258099967,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 170.46086258099967,
+                "iqr": 0.0,
+                "q1": 170.46086258099967,
+                "q3": 170.46086258099967,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 170.46086258099967,
+                "hd15iqr": 170.46086258099967,
+                "ops": 0.005866449253269615,
+                "total": 170.46086258099967,
+                "data": [
+                    170.46086258099967
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[500-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[500-find_n]",
+            "params": {
+                "size": 500,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "500-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 500
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 32.29528230399592,
+                "max": 32.29528230399592,
+                "mean": 32.29528230399592,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 32.29528230399592,
+                "iqr": 0.0,
+                "q1": 32.29528230399592,
+                "q3": 32.29528230399592,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 32.29528230399592,
+                "hd15iqr": 32.29528230399592,
+                "ops": 0.03096427492371755,
+                "total": 32.29528230399592,
+                "data": [
+                    32.29528230399592
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[500-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[500-find_kmp]",
+            "params": {
+                "size": 500,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "500-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 500
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 19.013337750002393,
+                "max": 19.013337750002393,
+                "mean": 19.013337750002393,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 19.013337750002393,
+                "iqr": 0.0,
+                "q1": 19.013337750002393,
+                "q3": 19.013337750002393,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 19.013337750002393,
+                "hd15iqr": 19.013337750002393,
+                "ops": 0.05259465818934785,
+                "total": 19.013337750002393,
+                "data": [
+                    19.013337750002393
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[500-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[500-find_kr]",
+            "params": {
+                "size": 500,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "500-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 500
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 208.90360349600087,
+                "max": 208.90360349600087,
+                "mean": 208.90360349600087,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 208.90360349600087,
+                "iqr": 0.0,
+                "q1": 208.90360349600087,
+                "q3": 208.90360349600087,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 208.90360349600087,
+                "hd15iqr": 208.90360349600087,
+                "ops": 0.004786896842682483,
+                "total": 208.90360349600087,
+                "data": [
+                    208.90360349600087
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[600-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[600-find_n]",
+            "params": {
+                "size": 600,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "600-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 600
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 39.148721957004454,
+                "max": 39.148721957004454,
+                "mean": 39.148721957004454,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 39.148721957004454,
+                "iqr": 0.0,
+                "q1": 39.148721957004454,
+                "q3": 39.148721957004454,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 39.148721957004454,
+                "hd15iqr": 39.148721957004454,
+                "ops": 0.02554361802917249,
+                "total": 39.148721957004454,
+                "data": [
+                    39.148721957004454
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[600-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[600-find_kmp]",
+            "params": {
+                "size": 600,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "600-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 600
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 23.735369273999822,
+                "max": 23.735369273999822,
+                "mean": 23.735369273999822,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 23.735369273999822,
+                "iqr": 0.0,
+                "q1": 23.735369273999822,
+                "q3": 23.735369273999822,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 23.735369273999822,
+                "hd15iqr": 23.735369273999822,
+                "ops": 0.04213121727562162,
+                "total": 23.735369273999822,
+                "data": [
+                    23.735369273999822
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[600-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[600-find_kr]",
+            "params": {
+                "size": 600,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "600-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 600
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 244.5534411519984,
+                "max": 244.5534411519984,
+                "mean": 244.5534411519984,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 244.5534411519984,
+                "iqr": 0.0,
+                "q1": 244.5534411519984,
+                "q3": 244.5534411519984,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 244.5534411519984,
+                "hd15iqr": 244.5534411519984,
+                "ops": 0.0040890857854601415,
+                "total": 244.5534411519984,
+                "data": [
+                    244.5534411519984
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[700-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[700-find_n]",
+            "params": {
+                "size": 700,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "700-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 700
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 44.84485574399878,
+                "max": 44.84485574399878,
+                "mean": 44.84485574399878,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 44.84485574399878,
+                "iqr": 0.0,
+                "q1": 44.84485574399878,
+                "q3": 44.84485574399878,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 44.84485574399878,
+                "hd15iqr": 44.84485574399878,
+                "ops": 0.022299101723252213,
+                "total": 44.84485574399878,
+                "data": [
+                    44.84485574399878
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[700-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[700-find_kmp]",
+            "params": {
+                "size": 700,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "700-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 700
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 26.328810537997924,
+                "max": 26.328810537997924,
+                "mean": 26.328810537997924,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 26.328810537997924,
+                "iqr": 0.0,
+                "q1": 26.328810537997924,
+                "q3": 26.328810537997924,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 26.328810537997924,
+                "hd15iqr": 26.328810537997924,
+                "ops": 0.037981206881974136,
+                "total": 26.328810537997924,
+                "data": [
+                    26.328810537997924
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[700-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[700-find_kr]",
+            "params": {
+                "size": 700,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "700-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 700
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 284.719094768996,
+                "max": 284.719094768996,
+                "mean": 284.719094768996,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 284.719094768996,
+                "iqr": 0.0,
+                "q1": 284.719094768996,
+                "q3": 284.719094768996,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 284.719094768996,
+                "hd15iqr": 284.719094768996,
+                "ops": 0.0035122337011198354,
+                "total": 284.719094768996,
+                "data": [
+                    284.719094768996
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[800-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[800-find_n]",
+            "params": {
+                "size": 800,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "800-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 800
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 51.65158318199974,
+                "max": 51.65158318199974,
+                "mean": 51.65158318199974,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 51.65158318199974,
+                "iqr": 0.0,
+                "q1": 51.65158318199974,
+                "q3": 51.65158318199974,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 51.65158318199974,
+                "hd15iqr": 51.65158318199974,
+                "ops": 0.01936049078062904,
+                "total": 51.65158318199974,
+                "data": [
+                    51.65158318199974
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[800-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[800-find_kmp]",
+            "params": {
+                "size": 800,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "800-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 800
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 30.16481230899808,
+                "max": 30.16481230899808,
+                "mean": 30.16481230899808,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 30.16481230899808,
+                "iqr": 0.0,
+                "q1": 30.16481230899808,
+                "q3": 30.16481230899808,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 30.16481230899808,
+                "hd15iqr": 30.16481230899808,
+                "ops": 0.03315120908946292,
+                "total": 30.16481230899808,
+                "data": [
+                    30.16481230899808
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[800-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[800-find_kr]",
+            "params": {
+                "size": 800,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "800-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 800
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 330.65677538300224,
+                "max": 330.65677538300224,
+                "mean": 330.65677538300224,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 330.65677538300224,
+                "iqr": 0.0,
+                "q1": 330.65677538300224,
+                "q3": 330.65677538300224,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 330.65677538300224,
+                "hd15iqr": 330.65677538300224,
+                "ops": 0.0030242840142673394,
+                "total": 330.65677538300224,
+                "data": [
+                    330.65677538300224
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[900-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[900-find_n]",
+            "params": {
+                "size": 900,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "900-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 900
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 57.37091860099463,
+                "max": 57.37091860099463,
+                "mean": 57.37091860099463,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 57.37091860099463,
+                "iqr": 0.0,
+                "q1": 57.37091860099463,
+                "q3": 57.37091860099463,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 57.37091860099463,
+                "hd15iqr": 57.37091860099463,
+                "ops": 0.017430433822313997,
+                "total": 57.37091860099463,
+                "data": [
+                    57.37091860099463
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[900-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[900-find_kmp]",
+            "params": {
+                "size": 900,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "900-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 900
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 33.81130780500098,
+                "max": 33.81130780500098,
+                "mean": 33.81130780500098,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 33.81130780500098,
+                "iqr": 0.0,
+                "q1": 33.81130780500098,
+                "q3": 33.81130780500098,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 33.81130780500098,
+                "hd15iqr": 33.81130780500098,
+                "ops": 0.0295759041846968,
+                "total": 33.81130780500098,
+                "data": [
+                    33.81130780500098
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[900-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[900-find_kr]",
+            "params": {
+                "size": 900,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "900-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 900
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 365.7836995099933,
+                "max": 365.7836995099933,
+                "mean": 365.7836995099933,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 365.7836995099933,
+                "iqr": 0.0,
+                "q1": 365.7836995099933,
+                "q3": 365.7836995099933,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 365.7836995099933,
+                "hd15iqr": 365.7836995099933,
+                "ops": 0.0027338561049593184,
+                "total": 365.7836995099933,
+                "data": [
+                    365.7836995099933
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[1000-find_n]",
+            "fullname": "test_benchmark.py::test_benchmark[1000-find_n]",
+            "params": {
+                "size": 1000,
+                "alg": "UNSERIALIZABLE[<function find_n at 0x7f286d90b1f0>]"
+            },
+            "param": "1000-find_n",
+            "extra_info": {
+                "alg": "find_n",
+                "size": 1000
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 63.758150857000146,
+                "max": 63.758150857000146,
+                "mean": 63.758150857000146,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 63.758150857000146,
+                "iqr": 0.0,
+                "q1": 63.758150857000146,
+                "q3": 63.758150857000146,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 63.758150857000146,
+                "hd15iqr": 63.758150857000146,
+                "ops": 0.015684269172781505,
+                "total": 63.758150857000146,
+                "data": [
+                    63.758150857000146
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[1000-find_kmp]",
+            "fullname": "test_benchmark.py::test_benchmark[1000-find_kmp]",
+            "params": {
+                "size": 1000,
+                "alg": "UNSERIALIZABLE[<function find_kmp at 0x7f286d90b0d0>]"
+            },
+            "param": "1000-find_kmp",
+            "extra_info": {
+                "alg": "find_kmp",
+                "size": 1000
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 37.641352751998056,
+                "max": 37.641352751998056,
+                "mean": 37.641352751998056,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 37.641352751998056,
+                "iqr": 0.0,
+                "q1": 37.641352751998056,
+                "q3": 37.641352751998056,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 37.641352751998056,
+                "hd15iqr": 37.641352751998056,
+                "ops": 0.02656652662268942,
+                "total": 37.641352751998056,
+                "data": [
+                    37.641352751998056
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_benchmark[1000-find_kr]",
+            "fullname": "test_benchmark.py::test_benchmark[1000-find_kr]",
+            "params": {
+                "size": 1000,
+                "alg": "UNSERIALIZABLE[<function find_kr at 0x7f286d90b310>]"
+            },
+            "param": "1000-find_kr",
+            "extra_info": {
+                "alg": "find_kr",
+                "size": 1000
+            },
+            "options": {
+                "disable_gc": false,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 407.4323563479993,
+                "max": 407.4323563479993,
+                "mean": 407.4323563479993,
+                "stddev": 0,
+                "rounds": 1,
+                "median": 407.4323563479993,
+                "iqr": 0.0,
+                "q1": 407.4323563479993,
+                "q3": 407.4323563479993,
+                "iqr_outliers": 0,
+                "stddev_outliers": 0,
+                "outliers": "0;0",
+                "ld15iqr": 407.4323563479993,
+                "hd15iqr": 407.4323563479993,
+                "ops": 0.00245439515153743,
+                "total": 407.4323563479993,
+                "data": [
+                    407.4323563479993
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2021-05-19T21:43:00.625027",
+    "version": "3.2.3"
+}
