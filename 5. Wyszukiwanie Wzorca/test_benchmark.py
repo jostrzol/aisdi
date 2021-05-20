@@ -76,6 +76,7 @@ if __name__ == "__main__":
         plt.plot(x, y, "-", label=name)
 
         plt.legend()
+        plt.grid()
 
     plt.savefig(PLT_DIR + "find.jpg")
     plt.close()
