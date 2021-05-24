@@ -18,7 +18,7 @@ def main(argv: List[str]) -> int:
     args = parser.parse_args(argv)
 
     # test argparse system
-    # ".\graph.py .\graphs\graph10x10.txt" should do just fine    
+    # ".\graph.py .\graphs\graph10x10.txt" should do just fine
     graph = []
     graph_line = []
     for line in args.file:
