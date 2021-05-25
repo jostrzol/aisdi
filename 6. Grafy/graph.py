@@ -80,23 +80,27 @@ class Graph:
         while(not reached_finish):
             if current_point_pos[0] != 0:
                 if self._graph[current_point_pos[1]][current_point_pos[0] - 1][2] == 0:
-                    self._graph[current_point_pos[1]][current_point_pos[0] - 1][1] = current_point[1] + \
-                        self._graph[current_point_pos[1]][current_point_pos[0] - 1][0]
+                    if current_point[1] + self._graph[current_point_pos[1]][current_point_pos[0] - 1][0] < self._graph[current_point_pos[1]][current_point_pos[0] - 1][1]:
+                        self._graph[current_point_pos[1]][current_point_pos[0] - 1][1] = current_point[1] + \
+                            self._graph[current_point_pos[1]][current_point_pos[0] - 1][0]
 
             if current_point_pos[0] != (self._width - 1):
                 if self._graph[current_point_pos[1]][current_point_pos[0] + 1][2] == 0:
-                    self._graph[current_point_pos[1]][current_point_pos[0] + 1][1] = current_point[1] + \
-                        self._graph[current_point_pos[1]][current_point_pos[0] + 1][0]
+                    if current_point[1] + self._graph[current_point_pos[1]][current_point_pos[0] + 1][0] < self._graph[current_point_pos[1]][current_point_pos[0] + 1][1]:
+                        self._graph[current_point_pos[1]][current_point_pos[0] + 1][1] = current_point[1] + \
+                            self._graph[current_point_pos[1]][current_point_pos[0] + 1][0]
 
             if current_point_pos[1] != 0:
                 if self._graph[current_point_pos[1] - 1][current_point_pos[0]][2] == 0:
-                    self._graph[current_point_pos[1] - 1][current_point_pos[0]][1] = current_point[1] + \
-                        self._graph[current_point_pos[1] - 1][current_point_pos[0]][0]
+                    if current_point[1] + self._graph[current_point_pos[1] - 1][current_point_pos[0]][0] < self._graph[current_point_pos[1] - 1][current_point_pos[0]][1]:
+                        self._graph[current_point_pos[1] - 1][current_point_pos[0]][1] = current_point[1] + \
+                            self._graph[current_point_pos[1] - 1][current_point_pos[0]][0]
 
             if current_point_pos[1] != (self._height - 1):
                 if self._graph[current_point_pos[1] + 1][current_point_pos[0]][2] == 0:
-                    self._graph[current_point_pos[1] + 1][current_point_pos[0]][1] = current_point[1] + \
-                        self._graph[current_point_pos[1] + 1][current_point_pos[0]][0]
+                    if current_point[1] + self._graph[current_point_pos[1] + 1][current_point_pos[0]][0] < self._graph[current_point_pos[1] + 1][current_point_pos[0]][1]:
+                        self._graph[current_point_pos[1] + 1][current_point_pos[0]][1] = current_point[1] + \
+                            self._graph[current_point_pos[1] + 1][current_point_pos[0]][0]
 
             current_point[2] = 1
 
