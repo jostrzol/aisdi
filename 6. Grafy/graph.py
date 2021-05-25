@@ -42,6 +42,24 @@ class Graph:
         for line in self._graph:
             print(line)
 
+    def print_point_cost(self) -> None:
+        for line in self._graph:
+            for point in line:
+                print(point[0], end=" ")
+            print()
+
+    def print_total_cost(self) -> None:
+        for line in self._graph:
+            for point in line:
+                print(point[1], end=" ")
+            print()
+
+    def print_visit_check(self) -> None:
+        for line in self._graph:
+            for point in line:
+                print(point[2], end=" ")
+            print()
+
     def find_start_finish(self) -> List[Point]:
         start_finish = []
         for y in range(self._height):
@@ -110,6 +128,9 @@ def main(argv: List[str]) -> int:
     print(graph.find_start_finish())
     graph.dijkstra()
     graph.print_list()
+    graph.print_point_cost()
+    graph.print_total_cost()
+    graph.print_visit_check()
     return 0
 
 
