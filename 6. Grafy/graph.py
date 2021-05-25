@@ -74,49 +74,101 @@ class Graph:
         self.calculate_dimensions()
         self._start = (self.find_start_finish())[0]
         self._finish = (self.find_start_finish())[1]
+        c_p_pos = self._start                       # current_point_pos
+        c_p = self._graph[c_p_pos[1]][c_p_pos[0]]   # current_point
         reached_finish = False
-        current_point_pos = self._start
-        current_point = self._graph[current_point_pos[1]][current_point_pos[0]]
         while(not reached_finish):
-            if current_point_pos[0] != 0:
-                if self._graph[current_point_pos[1]][current_point_pos[0] - 1][2] == 0:
-                    if current_point[1] + self._graph[current_point_pos[1]][current_point_pos[0] - 1][0] < self._graph[current_point_pos[1]][current_point_pos[0] - 1][1]:
-                        self._graph[current_point_pos[1]][current_point_pos[0] - 1][1] = current_point[1] + \
-                            self._graph[current_point_pos[1]][current_point_pos[0] - 1][0]
+            if c_p_pos[0] != 0:
+                if self._graph[c_p_pos[1]][c_p_pos[0] - 1][2] == 0:
+                    if c_p[1] + self._graph[c_p_pos[1]][c_p_pos[0] - 1][0] < \
+                       self._graph[c_p_pos[1]][c_p_pos[0] - 1][1]:
+                        self._graph[c_p_pos[1]][c_p_pos[0] - 1][1] = c_p[1] + \
+                            self._graph[c_p_pos[1]][c_p_pos[0] - 1][0]
 
-            if current_point_pos[0] != (self._width - 1):
-                if self._graph[current_point_pos[1]][current_point_pos[0] + 1][2] == 0:
-                    if current_point[1] + self._graph[current_point_pos[1]][current_point_pos[0] + 1][0] < self._graph[current_point_pos[1]][current_point_pos[0] + 1][1]:
-                        self._graph[current_point_pos[1]][current_point_pos[0] + 1][1] = current_point[1] + \
-                            self._graph[current_point_pos[1]][current_point_pos[0] + 1][0]
+            if c_p_pos[0] != (self._width - 1):
+                if self._graph[c_p_pos[1]][c_p_pos[0] + 1][2] == 0:
+                    if c_p[1] + self._graph[c_p_pos[1]][c_p_pos[0] + 1][0] < \
+                       self._graph[c_p_pos[1]][c_p_pos[0] + 1][1]:
+                        self._graph[c_p_pos[1]][c_p_pos[0] + 1][1] = c_p[1] + \
+                            self._graph[c_p_pos[1]][c_p_pos[0] + 1][0]
 
-            if current_point_pos[1] != 0:
-                if self._graph[current_point_pos[1] - 1][current_point_pos[0]][2] == 0:
-                    if current_point[1] + self._graph[current_point_pos[1] - 1][current_point_pos[0]][0] < self._graph[current_point_pos[1] - 1][current_point_pos[0]][1]:
-                        self._graph[current_point_pos[1] - 1][current_point_pos[0]][1] = current_point[1] + \
-                            self._graph[current_point_pos[1] - 1][current_point_pos[0]][0]
+            if c_p_pos[1] != 0:
+                if self._graph[c_p_pos[1] - 1][c_p_pos[0]][2] == 0:
+                    if c_p[1] + self._graph[c_p_pos[1] - 1][c_p_pos[0]][0] < \
+                       self._graph[c_p_pos[1] - 1][c_p_pos[0]][1]:
+                        self._graph[c_p_pos[1] - 1][c_p_pos[0]][1] = c_p[1] + \
+                            self._graph[c_p_pos[1] - 1][c_p_pos[0]][0]
 
-            if current_point_pos[1] != (self._height - 1):
-                if self._graph[current_point_pos[1] + 1][current_point_pos[0]][2] == 0:
-                    if current_point[1] + self._graph[current_point_pos[1] + 1][current_point_pos[0]][0] < self._graph[current_point_pos[1] + 1][current_point_pos[0]][1]:
-                        self._graph[current_point_pos[1] + 1][current_point_pos[0]][1] = current_point[1] + \
-                            self._graph[current_point_pos[1] + 1][current_point_pos[0]][0]
+            if c_p_pos[1] != (self._height - 1):
+                if self._graph[c_p_pos[1] + 1][c_p_pos[0]][2] == 0:
+                    if c_p[1] + self._graph[c_p_pos[1] + 1][c_p_pos[0]][0] < \
+                       self._graph[c_p_pos[1] + 1][c_p_pos[0]][1]:
+                        self._graph[c_p_pos[1] + 1][c_p_pos[0]][1] = c_p[1] + \
+                            self._graph[c_p_pos[1] + 1][c_p_pos[0]][0]
 
-            current_point[2] = 1
+            c_p[2] = 1
 
             min_cost = float('inf')
             min_cost_pos = (0, 0)
             for y in range(self._height):
                 for x in range(self._width):
-                    if self._graph[y][x][1] < min_cost and self._graph[y][x][2] == 0:
+                    if self._graph[y][x][1] < min_cost and \
+                       self._graph[y][x][2] == 0:
                         min_cost_pos = (x, y)
                         min_cost = self._graph[y][x][1]
 
-            current_point_pos = min_cost_pos
-            current_point = self._graph[current_point_pos[1]][current_point_pos[0]]
+            c_p_pos = min_cost_pos
+            c_p = self._graph[c_p_pos[1]][c_p_pos[0]]
 
             if self._graph[self._finish[1]][self._finish[0]][2] == 1:
                 reached_finish = True
+
+    def return_path(self) -> List[Point]:
+        path_list = []
+        c_p_pos = self._finish                      # current_point_pos
+        reached_start = False
+        while(not reached_start):
+            path_list.append(c_p_pos)
+            min_val = float('inf')
+            next_point_pos = (0, 0)
+            if c_p_pos[0] != 0:
+                if self._graph[c_p_pos[1]][c_p_pos[0] - 1][1] < min_val:
+                    min_val = self._graph[c_p_pos[1]][c_p_pos[0] - 1][1]
+                    next_point_pos = (c_p_pos[0] - 1, c_p_pos[1])
+
+            if c_p_pos[0] != (self._width - 1):
+                if self._graph[c_p_pos[1]][c_p_pos[0] + 1][1] < min_val:
+                    min_val = self._graph[c_p_pos[1]][c_p_pos[0] + 1][1]
+                    next_point_pos = (c_p_pos[0] + 1, c_p_pos[1])
+
+            if c_p_pos[1] != 0:
+                if self._graph[c_p_pos[1] - 1][c_p_pos[0]][1] < min_val:
+                    min_val = self._graph[c_p_pos[1] - 1][c_p_pos[0]][1]
+                    next_point_pos = (c_p_pos[0], c_p_pos[1] - 1)
+
+            if c_p_pos[1] != (self._height - 1):
+                if self._graph[c_p_pos[1] + 1][c_p_pos[0]][1] < min_val:
+                    min_val = self._graph[c_p_pos[1] + 1][c_p_pos[0]][1]
+                    next_point_pos = (c_p_pos[0], c_p_pos[1] + 1)
+
+            c_p_pos = next_point_pos
+
+            if c_p_pos == self._start:
+                path_list.append(self._start)
+                reached_start = True
+
+        path_list.reverse()
+        return(path_list)
+
+    def print_path(self) -> None:
+        path_list = self.return_path()
+        for y in range(self._height):
+            for x in range(self._width):
+                if (x, y) in path_list:
+                    print(self._graph[y][x][0], end=" ")
+                else:
+                    print(end="  ")
+            print()
 
 
 def main(argv: List[str]) -> int:
@@ -128,13 +180,10 @@ def main(argv: List[str]) -> int:
     args = parser.parse_args(argv)
     graph = Graph()
     graph.make_graph_from_file(args.file)
-    graph.print_list()
-    print(graph.find_start_finish())
     graph.dijkstra()
-    graph.print_list()
     graph.print_point_cost()
-    graph.print_total_cost()
-    graph.print_visit_check()
+    print()
+    graph.print_path()
     return 0
 
 
