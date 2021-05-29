@@ -5,24 +5,68 @@ import sys
 import string
 
 
-# Type Alias
+# Typing Alias
 Point = List[int]
 
 
 class Graph:
+    """
+    Class representing a graph
+    """
+
     def __init__(self, graph: List[List] = [[]]) -> None:
+        """
+        Initializes a Graph object
+
+        If no graph is passed to __init__,
+        defaults the graph's data to:
+
+        self._graph = [[[0, 0, 1], [0, 0, 1]]]
+        self._heigh = 1
+        self._width = 2
+        self._start = (0, 0)
+        self._finish = (1, 0)
+        """
         self._graph = graph
-        self._height = len(self._graph)
-        if len(graph) > 1:
-            self._width = len(self._graph[0])
-            self._start = (self.find_start_finish())[0]
-            self._finish = (self.find_start_finish())[1]
+        if self._graph == [[]]:
+            self._graph[0].append([0, float('inf'), 0])
+            self._graph[0].append([0, float('inf'), 0])
         else:
-            self._width = 0
-            self._start = (0, 0)
-            self._finish = (0, 0)
+            temp_graph = []
+            graph_line = []
+            for line in graph:
+                for char in line:
+                    if str(char) in string.digits:
+                        graph_line.append([char, float('inf'), 0])
+                temp_graph.append(graph_line)
+                graph_line = []
+            self._graph = temp_graph
+        self._height = 0
+        self._width = 0
+        self._start = (0, 0)
+        self._finish = (0, 0)
+        self.dijkstra()
 
     def make_graph_from_file(self, file: TextIO) -> None:
+        """
+        Creates a list representation of
+        a graph from a file input:
+
+        1034
+        5670
+
+        becomes
+
+        [[1, 0, 3, 4],
+         [5, 6, 7, 0]]
+
+        or rather
+
+        [[[1, inf, 0], [0,  0,  0], [3, inf, 0], [4, inf, 0]],
+         [[5, inf, 0], [6, inf, 0], [7, inf, 0], [0, inf, 0]]]
+
+        where inf = float('inf')
+        """
         graph = []
         graph_line = []
         for line in file:
@@ -35,32 +79,66 @@ class Graph:
         self.calculate_dimensions()
 
     def calculate_dimensions(self) -> None:
+        """
+        Calculates the dimensions of a rectangular graph:
+
+        [1, 2, 3]
+        [4, 5, 6]
+        [7, 8, 9]      ==>  graph._height = 3, graph._width = 3
+
+        [1, 2]
+        [3, 4]
+        [5, 6]
+        [7, 8]         ==>  graph._height = 4, graph._width = 2
+
+        [1, 2, 3, 4]
+        [5, 6, 7, 8]   ==>  graph._height = 2, graph._width = 4
+        """
         self._height = len(self._graph)
         self._width = len(self._graph[0])
 
     def print_list(self) -> None:
+        """
+        Prints a graph with all its hidden values
+        """
         for line in self._graph:
             print(line)
 
     def print_point_cost(self) -> None:
+        """
+        Prints only the cost of individual points
+        """
         for line in self._graph:
             for point in line:
                 print(point[0], end=" ")
             print()
 
     def print_total_cost(self) -> None:
+        """
+        Prints the total cost of getting to
+        a specific point from the starting point
+        """
         for line in self._graph:
             for point in line:
                 print(point[1], end=" ")
             print()
 
     def print_visit_check(self) -> None:
+        """
+        Prints whether or not the dijkstra
+        algorithm has visited a specific point
+        """
         for line in self._graph:
             for point in line:
                 print(point[2], end=" ")
             print()
 
     def find_start_finish(self) -> List[Point]:
+        """
+        Return the positions of start and finish points:
+
+        [[start_x, start_y], [finish_x, finish_y]]
+        """
         start_finish = []
         for y in range(self._height):
             for x in range(self._width):
@@ -71,6 +149,13 @@ class Graph:
         return start_finish
 
     def dijkstra(self) -> None:
+        """
+        Utilizes Dijkstra's algorithm to assign
+        each point (but not all of them; only these
+        we need to get to the finish) on the graph
+        a total cost of getting to that specific
+        point from the start
+        """
         self.calculate_dimensions()
         self._start = (self.find_start_finish())[0]
         self._finish = (self.find_start_finish())[1]
@@ -124,6 +209,11 @@ class Graph:
                 reached_finish = True
 
     def return_path(self) -> List[Point]:
+        """
+        Returns the start -> finish path by
+        reversing through the lowest cost neighbours,
+        starting at the finish point
+        """
         path_list = []
         c_p_pos = self._finish                      # current_point_pos
         reached_start = False
@@ -161,6 +251,10 @@ class Graph:
         return(path_list)
 
     def print_path(self) -> None:
+        """
+        Prints only those points on the graph
+        which are part of the start -> finish path
+        """
         path_list = self.return_path()
         for y in range(self._height):
             for x in range(self._width):
