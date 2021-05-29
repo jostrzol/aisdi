@@ -1,8 +1,12 @@
-from typing import TextIO, List
+from typing import TextIO, List, Tuple
 
 import argparse
 import sys
 import string
+
+from rich.console import Console
+
+console = Console(color_system="truecolor")
 
 
 # Typing Alias
@@ -264,6 +268,56 @@ class Graph:
                     print(end="  ")
             print()
 
+    def pretty_print_path(self) -> None:
+        """
+        Kinda like print_path(), but with pretty colors
+        """
+        r = 200
+        g = 50
+        b = 20
+        path_list = self.return_path()
+        for y in range(self._height):
+            for x in range(self._width):
+                if (x, y) in path_list:
+                    color = (r, g, b)
+                    hex_color = rgb_to_hex(color)
+                    console.print(f"[{hex_color}]{self._graph[y][x][0]}[/]",
+                                  end=" ")
+
+                    if (r - 10) < 0:
+                        r = r + 245
+                    else:
+                        r -= 10
+
+                    if (g + 10) > 255:
+                        g = g - 245
+                    else:
+                        g += 10
+
+                    if (b + 5) > 255:
+                        b = b - 250
+                    else:
+                        b += 5
+                else:
+                    console.print(f"[#000000]{self._graph[y][x][0]}[/]",
+                                  end=" ")
+            print()
+
+
+def rgb_to_hex(rgb_color: Tuple[int, int, int]):
+    hex_color = "#"
+    for i in range(3):
+        if len(hex(rgb_color[i])[2:]) == 1:
+            hex_color += "0"
+            hex_color += hex(rgb_color[i])[2:]
+        else:
+            hex_color += hex(rgb_color[i])[2:]
+    return hex_color
+
+
+def modify_color_value(color_value: int, increase: bool):
+    pass
+
 
 def main(argv: List[str]) -> int:
     parser = argparse.ArgumentParser(description="find a path in a graph")
@@ -278,6 +332,8 @@ def main(argv: List[str]) -> int:
     graph.print_point_cost()
     print()
     graph.print_path()
+    print()
+    graph.pretty_print_path()
     return 0
 
 
