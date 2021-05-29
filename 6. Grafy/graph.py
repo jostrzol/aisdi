@@ -310,10 +310,6 @@ def rgb_to_hex(rgb_color: Tuple[int, int, int]):
     return hex_color
 
 
-def modify_color_value(color_value: int, increase: bool):
-    pass
-
-
 def main(argv: List[str]) -> int:
     parser = argparse.ArgumentParser(description="find a path in a graph")
     parser.add_argument("file", type=argparse.FileType("r"),
