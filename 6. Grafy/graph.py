@@ -272,32 +272,27 @@ class Graph:
         """
         Kinda like print_path(), but with pretty colors
         """
-        r = 200
-        g = 50
-        b = 20
+        r = 205
+        g = 49
+        b = 49
         path_list = self.return_path()
+        num_of_points = len(path_list)
+        delta_rgb = 156 / num_of_points
         for y in range(self._height):
             for x in range(self._width):
                 if (x, y) in path_list:
-                    color = (r, g, b)
+                    index = path_list.index((x, y))
+                    for i in range(index):
+                        r -= delta_rgb
+                        g += delta_rgb
+                        b += delta_rgb
+                    color = (int(r), int(g), int(b))
                     hex_color = rgb_to_hex(color)
                     console.print(f"[{hex_color}]{self._graph[y][x][0]}[/]",
                                   end=" ")
-
-                    if (r - 10) < 0:
-                        r = r + 245
-                    else:
-                        r -= 1
-
-                    if (g + 10) > 255:
-                        g = g - 245
-                    else:
-                        g += 1
-
-                    if (b + 5) > 255:
-                        b = b - 250
-                    else:
-                        b += 1
+                    r = 205
+                    g = 49
+                    b = 49
                 else:
                     console.print(f"[#000000]{self._graph[y][x][0]}[/]",
                                   end=" ")
