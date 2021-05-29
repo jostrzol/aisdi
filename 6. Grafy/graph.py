@@ -287,17 +287,17 @@ class Graph:
                     if (r - 10) < 0:
                         r = r + 245
                     else:
-                        r -= 10
+                        r -= 1
 
                     if (g + 10) > 255:
                         g = g - 245
                     else:
-                        g += 10
+                        g += 1
 
                     if (b + 5) > 255:
                         b = b - 250
                     else:
-                        b += 5
+                        b += 1
                 else:
                     console.print(f"[#000000]{self._graph[y][x][0]}[/]",
                                   end=" ")
