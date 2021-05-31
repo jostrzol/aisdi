@@ -12,7 +12,7 @@
 
 [5. Wyszukiwanie Wzorca](5.%20Wyszukiwanie%20Wzorca/reference/Wyszukiwanie-wzorca.pdf)
 
-[6. Grafy](6.%20Grafy/reference/placeholder.txt)
+[6. Grafy](6.%20Grafy/reference/Grafy.pdf)
 
 #### Inne pliki związane z laboratoriami:
 [Instrukcja GitLab](reference/Instrukcja%20GitLab.pdf)
