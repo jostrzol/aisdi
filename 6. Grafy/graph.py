@@ -320,11 +320,11 @@ def main(argv: List[str]) -> int:
     graph = Graph()
     graph.make_graph_from_file(args.file)
     graph.dijkstra()
-    graph.print_point_cost()
-    print()
+    # graph.print_point_cost()
+    # print()
     graph.print_path()
-    print()
-    graph.pretty_print_path()
+    # print()
+    # graph.pretty_print_path()
     return 0
 
 
