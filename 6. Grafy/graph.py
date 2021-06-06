@@ -6,18 +6,19 @@ import argparse
 import sys
 import string
 
-from dataclasses import dataclass
-
+from dataclasses import dataclass, field
+from heapq import heappop, heappush
 from rich.console import Console
+import itertools
 
 console = Console(color_system="truecolor")
 
 
-@dataclass
+@dataclass(order=True)
 class Point:
-    weight: int
-    cost: int = float('inf')
-    visited: bool = False
+    weight: int = field(compare=False)
+    cost: int = field(default=float('inf'), compare=True)
+    visited: bool = field(default=False, compare=False)
 
     def __str__(self):
         return "{" + f'w:{self.weight},c:{self.cost},v:{self.visited}' + "}"
@@ -48,6 +49,9 @@ class Position:
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
 
+    def __hash__(self):
+        return hash((self.x, self.y))
+
 
 @dataclass
 class Rectangle:
@@ -70,6 +74,38 @@ class Rectangle:
         """
         return position.x >= self._bl.x and position.y >= self._bl.y and \
             position.x <= self._tr.x and position.y <= self._tr.y
+
+
+class PriorityQueue:
+    REMOVED = '<removed-item>'             # placeholder for a removed item
+
+    def __init__(self):
+        self._pq = []                      # list of entries arranged in a heap
+        self._entry_finder = {}            # mapping of items to entries
+        self._counter = itertools.count()  # unique sequence count
+
+    def push(self, item, priority=0):
+        'Add a new item or update the priority of an existing item'
+        if item in self._entry_finder:
+            self.remove(item)
+        count = next(self._counter)
+        entry = [priority, count, item]
+        self._entry_finder[item] = entry
+        heappush(self._pq, entry)
+
+    def remove(self, item):
+        'Mark an existing item as REMOVED.  Raise KeyError if not found.'
+        entry = self._entry_finder.pop(item)
+        entry[-1] = PriorityQueue.REMOVED
+
+    def pop(self):
+        'Remove and return the lowest priority item. Raise KeyError if empty.'
+        while self._pq:
+            _, _, task = heappop(self._pq)
+            if task is not PriorityQueue.REMOVED:
+                del self._entry_finder[task]
+                return task
+        raise KeyError('pop from an empty priority queue')
 
 
 class Graph:
@@ -181,27 +217,27 @@ class Graph:
         a total cost of getting to that specific
         point from the start
         """
-        c_p_pos = self._start       # current_point_pos
-        c_p = self._get(c_p_pos)    # current_point
+        # c_p_pos = self._start       # current_point_pos
+        # c_p = self._get(c_p_pos)    # current_point
+
+        q = PriorityQueue()
+        for pos in self:
+            p = self._get(pos)
+            q.push(pos, p.cost)
+
         reached_finish = False
         while(not reached_finish):
+            c_p_pos: Position = q.pop()
+            c_p: Point = self._get(c_p_pos)
+
             for pos in c_p_pos.neighbours(self._bounds):
                 p = self._get(pos)
-                if not p.visited and c_p.cost + p.weight < p.cost:
+                if c_p.cost + p.weight < p.cost:
                     p.cost = c_p.cost + p.weight
+                    # update priority
+                    q.push(pos, p.cost)
 
             c_p.visited = True
-
-            min_cost = float('inf')
-            min_cost_pos = Position(0, 0)
-            for pos in self:
-                p = self._get(pos)
-                if not p.visited and p.cost < min_cost:
-                    min_cost_pos = pos
-                    min_cost = p.cost
-
-            c_p_pos = min_cost_pos
-            c_p = self._get(min_cost_pos)
 
             if self._get(self._finish).visited:
                 reached_finish = True
