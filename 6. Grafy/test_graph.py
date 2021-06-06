@@ -1,17 +1,18 @@
 import os
+from graph import Graph, Point, Position
+
 dirname = os.path.dirname(__file__)
 filename = os.path.join(dirname)
-
-from graph import Graph
 
 
 def test_init_graph():
     graph = Graph()
-    assert graph._graph == [[[0, 0, 1], [0, 0, 1]]]
+    assert graph._graph == [
+        [Point(0, 0, False), Point(0, float('inf'), False)]]
     assert graph._height == 1
     assert graph._width == 2
-    assert graph._start == (0, 0)
-    assert graph._finish == (1, 0)
+    assert graph._start == Position(0, 0)
+    assert graph._finish == Position(1, 0)
 
 
 def test_graph_1():

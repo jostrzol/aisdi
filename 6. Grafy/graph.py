@@ -1,16 +1,75 @@
-from typing import TextIO, List, Tuple
+from __future__ import annotations
+from typing import Optional, TextIO, List, Tuple, Union
+from copy import copy
 
 import argparse
 import sys
 import string
+
+from dataclasses import dataclass
 
 from rich.console import Console
 
 console = Console(color_system="truecolor")
 
 
-# Typing Alias
-Point = List[int]
+@dataclass
+class Point:
+    weight: int
+    cost: int = float('inf')
+    visited: bool = False
+
+    def __str__(self):
+        return "{" + f'w:{self.weight},c:{self.cost},v:{self.visited}' + "}"
+
+
+@dataclass
+class Position:
+    x: int
+    y: int
+
+    def neighbours(self, bounds: Optional[Rectangle] = None):
+        """
+        yields all neighbouring positions which fit in the rectangle given
+        """
+        d = (-1, 1)
+        for dx in d:
+            pos = Position(self.x + dx, self.y)
+            if bounds is None or bounds.fits(pos):
+                yield pos
+        for dy in d:
+            pos = Position(self.x, self.y + dy)
+            if bounds is None or bounds.fits(pos):
+                yield pos
+
+    def __str__(self):
+        return f'({self.x}, {self.y})'
+
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+
+@dataclass
+class Rectangle:
+    _bl: Position
+    _tr: Position
+
+    def __post_init__(self):
+        if self._bl.x > self._tr.x:
+            tmp = self._bl.x
+            self._bl.x = self._tr.x
+            self._tr.x = tmp
+        if self._bl.y > self._tr.y:
+            tmp = self._bl.y
+            self._bl.y = self._tr.y
+            self._tr.y = tmp
+
+    def fits(self, position: Position) -> True:
+        """
+        Checks if position fits inside the square
+        """
+        return position.x >= self._bl.x and position.y >= self._bl.y and \
+            position.x <= self._tr.x and position.y <= self._tr.y
 
 
 class Graph:
@@ -18,88 +77,37 @@ class Graph:
     Class representing a graph
     """
 
-    def __init__(self, graph: List[List] = [[]]) -> None:
+    def __init__(self, graph: Union[List[List[int]], TextIO] = None) -> None:
         """
         Initializes a Graph object
 
         If no graph is passed to __init__,
         defaults the graph's data to:
 
-        self._graph = [[[0, 0, 1], [0, 0, 1]]]
+        self._graph = [[[0, 0, false], [0, inf, false]]]
         self._heigh = 1
         self._width = 2
         self._start = (0, 0)
         self._finish = (1, 0)
         """
-        self._graph = graph
-        if self._graph == [[]]:
-            self._graph[0].append([0, float('inf'), 0])
-            self._graph[0].append([0, float('inf'), 0])
-        else:
-            temp_graph = []
-            graph_line = []
-            for line in graph:
-                for char in line:
-                    if str(char) in string.digits:
-                        graph_line.append([char, float('inf'), 0])
-                temp_graph.append(graph_line)
-                graph_line = []
-            self._graph = temp_graph
-        self._height = 0
-        self._width = 0
-        self._start = (0, 0)
-        self._finish = (0, 0)
-        self.dijkstra()
+        if graph is None:
+            graph = [[0, 0]]
 
-    def make_graph_from_file(self, file: TextIO) -> None:
-        """
-        Creates a list representation of
-        a graph from a file input:
-
-        1034
-        5670
-
-        becomes
-
-        [[1, 0, 3, 4],
-         [5, 6, 7, 0]]
-
-        or rather
-
-        [[[1, inf, 0], [0,  0,  0], [3, inf, 0], [4, inf, 0]],
-         [[5, inf, 0], [6, inf, 0], [7, inf, 0], [0, inf, 0]]]
-
-        where inf = float('inf')
-        """
-        graph = []
-        graph_line = []
-        for line in file:
+        self._graph: List[List[Point]] = []
+        for line in graph:
+            graph_line: List[Point] = []
             for char in line:
-                if char in string.digits:
-                    graph_line.append([int(char), float('inf'), 0])
-            graph.append(graph_line)
-            graph_line = []
-        self._graph = graph
-        self.calculate_dimensions()
+                if str(char) in string.digits:
+                    graph_line.append(Point(int(char)))
+            self._graph.append(graph_line)
 
-    def calculate_dimensions(self) -> None:
-        """
-        Calculates the dimensions of a rectangular graph:
-
-        [1, 2, 3]
-        [4, 5, 6]
-        [7, 8, 9]      ==>  graph._height = 3, graph._width = 3
-
-        [1, 2]
-        [3, 4]
-        [5, 6]
-        [7, 8]         ==>  graph._height = 4, graph._width = 2
-
-        [1, 2, 3, 4]
-        [5, 6, 7, 8]   ==>  graph._height = 2, graph._width = 4
-        """
         self._height = len(self._graph)
         self._width = len(self._graph[0])
+
+        self._bounds = Rectangle(
+            Position(0, 0), Position(self._width-1, self._height-1))
+
+        self._start, self._finish = self.find_start_finish()
 
     def print_list(self) -> None:
         """
@@ -108,13 +116,13 @@ class Graph:
         for line in self._graph:
             print(line)
 
-    def print_point_cost(self) -> None:
+    def print_point_weight(self) -> None:
         """
-        Prints only the cost of individual points
+        Prints only the weight of individual points
         """
         for line in self._graph:
             for point in line:
-                print(point[0], end=" ")
+                print(point.weight, end=" ")
             print()
 
     def print_total_cost(self) -> None:
@@ -124,7 +132,7 @@ class Graph:
         """
         for line in self._graph:
             for point in line:
-                print(point[1], end=" ")
+                print(point.cost, end=" ")
             print()
 
     def print_visit_check(self) -> None:
@@ -134,23 +142,36 @@ class Graph:
         """
         for line in self._graph:
             for point in line:
-                print(point[2], end=" ")
+                to_print = 0
+                if point.visited:
+                    to_print = 1
+                print(to_print, end=" ")
             print()
 
-    def find_start_finish(self) -> List[Point]:
+    def find_start_finish(self) -> Tuple[Position, Position]:
         """
         Return the positions of start and finish points:
 
-        [[start_x, start_y], [finish_x, finish_y]]
+        ((start_x, start_y), (finish_x, finish_y))
         """
-        start_finish = []
-        for y in range(self._height):
-            for x in range(self._width):
-                if self._graph[y][x][0] == 0:
-                    if len(start_finish) == 0:
-                        self._graph[y][x][1] = 0
-                    start_finish.append((x, y))
-        return start_finish
+        start: Position = None
+        finish: Position = None
+
+        for pos in self:
+            p = self._get(pos)
+            if p.weight == 0:
+                if start is None:
+                    p.cost = 0
+                    start = copy(pos)
+                else:
+                    finish = pos
+        return start, finish
+
+    def _get(self, position: Position) -> Point:
+        """
+        Returns a point under the given position
+        """
+        return self._graph[position.y][position.x]
 
     def dijkstra(self) -> None:
         """
@@ -160,90 +181,50 @@ class Graph:
         a total cost of getting to that specific
         point from the start
         """
-        self.calculate_dimensions()
-        self._start = (self.find_start_finish())[0]
-        self._finish = (self.find_start_finish())[1]
-        c_p_pos = self._start                       # current_point_pos
-        c_p = self._graph[c_p_pos[1]][c_p_pos[0]]   # current_point
+        c_p_pos = self._start       # current_point_pos
+        c_p = self._get(c_p_pos)    # current_point
         reached_finish = False
         while(not reached_finish):
-            if c_p_pos[0] != 0:
-                if self._graph[c_p_pos[1]][c_p_pos[0] - 1][2] == 0:
-                    if c_p[1] + self._graph[c_p_pos[1]][c_p_pos[0] - 1][0] < \
-                       self._graph[c_p_pos[1]][c_p_pos[0] - 1][1]:
-                        self._graph[c_p_pos[1]][c_p_pos[0] - 1][1] = c_p[1] + \
-                            self._graph[c_p_pos[1]][c_p_pos[0] - 1][0]
+            for pos in c_p_pos.neighbours(self._bounds):
+                p = self._get(pos)
+                if not p.visited and c_p.cost + p.weight < p.cost:
+                    p.cost = c_p.cost + p.weight
 
-            if c_p_pos[0] != (self._width - 1):
-                if self._graph[c_p_pos[1]][c_p_pos[0] + 1][2] == 0:
-                    if c_p[1] + self._graph[c_p_pos[1]][c_p_pos[0] + 1][0] < \
-                       self._graph[c_p_pos[1]][c_p_pos[0] + 1][1]:
-                        self._graph[c_p_pos[1]][c_p_pos[0] + 1][1] = c_p[1] + \
-                            self._graph[c_p_pos[1]][c_p_pos[0] + 1][0]
-
-            if c_p_pos[1] != 0:
-                if self._graph[c_p_pos[1] - 1][c_p_pos[0]][2] == 0:
-                    if c_p[1] + self._graph[c_p_pos[1] - 1][c_p_pos[0]][0] < \
-                       self._graph[c_p_pos[1] - 1][c_p_pos[0]][1]:
-                        self._graph[c_p_pos[1] - 1][c_p_pos[0]][1] = c_p[1] + \
-                            self._graph[c_p_pos[1] - 1][c_p_pos[0]][0]
-
-            if c_p_pos[1] != (self._height - 1):
-                if self._graph[c_p_pos[1] + 1][c_p_pos[0]][2] == 0:
-                    if c_p[1] + self._graph[c_p_pos[1] + 1][c_p_pos[0]][0] < \
-                       self._graph[c_p_pos[1] + 1][c_p_pos[0]][1]:
-                        self._graph[c_p_pos[1] + 1][c_p_pos[0]][1] = c_p[1] + \
-                            self._graph[c_p_pos[1] + 1][c_p_pos[0]][0]
-
-            c_p[2] = 1
+            c_p.visited = True
 
             min_cost = float('inf')
-            min_cost_pos = (0, 0)
-            for y in range(self._height):
-                for x in range(self._width):
-                    if self._graph[y][x][1] < min_cost and \
-                       self._graph[y][x][2] == 0:
-                        min_cost_pos = (x, y)
-                        min_cost = self._graph[y][x][1]
+            min_cost_pos = Position(0, 0)
+            for pos in self:
+                p = self._get(pos)
+                if not p.visited and p.cost < min_cost:
+                    min_cost_pos = pos
+                    min_cost = p.cost
 
             c_p_pos = min_cost_pos
-            c_p = self._graph[c_p_pos[1]][c_p_pos[0]]
+            c_p = self._get(min_cost_pos)
 
-            if self._graph[self._finish[1]][self._finish[0]][2] == 1:
+            if self._get(self._finish).visited:
                 reached_finish = True
 
-    def return_path(self) -> List[Point]:
+    def return_path(self) -> List[Position]:
         """
         Returns the start -> finish path by
         reversing through the lowest cost neighbours,
         starting at the finish point
         """
-        path_list = []
-        c_p_pos = self._finish                      # current_point_pos
+        path_list: List[Position] = []
+        c_p_pos = self._finish          # current_point_pos
         reached_start = False
         while(not reached_start):
             path_list.append(c_p_pos)
             min_val = float('inf')
-            next_point_pos = (0, 0)
-            if c_p_pos[0] != 0:
-                if self._graph[c_p_pos[1]][c_p_pos[0] - 1][1] < min_val:
-                    min_val = self._graph[c_p_pos[1]][c_p_pos[0] - 1][1]
-                    next_point_pos = (c_p_pos[0] - 1, c_p_pos[1])
+            next_point_pos: Position
 
-            if c_p_pos[0] != (self._width - 1):
-                if self._graph[c_p_pos[1]][c_p_pos[0] + 1][1] < min_val:
-                    min_val = self._graph[c_p_pos[1]][c_p_pos[0] + 1][1]
-                    next_point_pos = (c_p_pos[0] + 1, c_p_pos[1])
-
-            if c_p_pos[1] != 0:
-                if self._graph[c_p_pos[1] - 1][c_p_pos[0]][1] < min_val:
-                    min_val = self._graph[c_p_pos[1] - 1][c_p_pos[0]][1]
-                    next_point_pos = (c_p_pos[0], c_p_pos[1] - 1)
-
-            if c_p_pos[1] != (self._height - 1):
-                if self._graph[c_p_pos[1] + 1][c_p_pos[0]][1] < min_val:
-                    min_val = self._graph[c_p_pos[1] + 1][c_p_pos[0]][1]
-                    next_point_pos = (c_p_pos[0], c_p_pos[1] + 1)
+            for pos in c_p_pos.neighbours(self._bounds):
+                p = self._get(pos)
+                if p.cost < min_val:
+                    min_val = p.cost
+                    next_point_pos = pos
 
             c_p_pos = next_point_pos
 
@@ -262,8 +243,9 @@ class Graph:
         path_list = self.return_path()
         for y in range(self._height):
             for x in range(self._width):
-                if (x, y) in path_list:
-                    print(self._graph[y][x][0], end=" ")
+                pos = Position(x, y)
+                if pos in path_list:
+                    print(self._get(pos).weight, end=" ")
                 else:
                     print(end="  ")
             print()
@@ -280,23 +262,38 @@ class Graph:
         delta_rgb = 156 / num_of_points
         for y in range(self._height):
             for x in range(self._width):
-                if (x, y) in path_list:
-                    index = path_list.index((x, y))
-                    for i in range(index):
-                        r -= delta_rgb
-                        g += delta_rgb
-                        b += delta_rgb
+                pos = Position(x, y)
+                p = self._get(pos)
+                if pos in path_list:
+                    index = path_list.index(pos)
+                    r -= delta_rgb * index
+                    g += delta_rgb * index
+                    b += delta_rgb * index
                     color = (int(r), int(g), int(b))
                     hex_color = rgb_to_hex(color)
-                    console.print(f"[{hex_color}]{self._graph[y][x][0]}[/]",
+                    console.print(f"[{hex_color}]{p.weight}[/]",
                                   end=" ")
                     r = 205
                     g = 49
                     b = 49
                 else:
-                    console.print(f"[#000000]{self._graph[y][x][0]}[/]",
+                    console.print(f"[#000000]{p.weight}[/]",
                                   end=" ")
             print()
+
+    def __iter__(self):
+        self._current = Position(0, 0)
+        return self
+
+    def __next__(self):
+        tmp = copy(self._current)
+        self._current.x += 1
+        if not self._bounds.fits(tmp):
+            raise StopIteration
+        elif not self._bounds.fits(self._current):
+            self._current.x = 0
+            self._current.y += 1
+        return tmp
 
 
 def rgb_to_hex(rgb_color: Tuple[int, int, int]):
@@ -317,10 +314,9 @@ def main(argv: List[str]) -> int:
                         default=sys.stdin,
                         help="a path to the file containing the graph")
     args = parser.parse_args(argv)
-    graph = Graph()
-    graph.make_graph_from_file(args.file)
+    graph = Graph(args.file)
     graph.dijkstra()
-    # graph.print_point_cost()
+    # graph.print_point_weight()
     # print()
     graph.print_path()
     # print()
