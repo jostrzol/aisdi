@@ -36,11 +36,11 @@ class Position:
         d = (-1, 1)
         for dx in d:
             pos = Position(self.x + dx, self.y)
-            if bounds is None or bounds.fits(pos):
+            if bounds is None or pos in bounds:
                 yield pos
         for dy in d:
             pos = Position(self.x, self.y + dy)
-            if bounds is None or bounds.fits(pos):
+            if bounds is None or pos in bounds:
                 yield pos
 
     def __str__(self):
@@ -68,7 +68,7 @@ class Rectangle:
             self._bl.y = self._tr.y
             self._tr.y = tmp
 
-    def fits(self, position: Position) -> True:
+    def __contains__(self, position: Position) -> True:
         """
         Checks if position fits inside the square
         """
@@ -77,8 +77,6 @@ class Rectangle:
 
 
 class PriorityQueue:
-    REMOVED = '<removed-item>'             # placeholder for a removed item
-
     def __init__(self):
         self._pq = []                      # list of entries arranged in a heap
         self._entry_finder = {}            # mapping of items to entries
@@ -94,15 +92,15 @@ class PriorityQueue:
         heappush(self._pq, entry)
 
     def remove(self, item):
-        'Mark an existing item as REMOVED.  Raise KeyError if not found.'
+        'Mark an existing item as None.  Raise KeyError if not found.'
         entry = self._entry_finder.pop(item)
-        entry[-1] = PriorityQueue.REMOVED
+        entry[-1] = None
 
     def pop(self):
         'Remove and return the lowest priority item. Raise KeyError if empty.'
         while self._pq:
             _, _, task = heappop(self._pq)
-            if task is not PriorityQueue.REMOVED:
+            if task is not None:
                 del self._entry_finder[task]
                 return task
         raise KeyError('pop from an empty priority queue')
@@ -217,9 +215,6 @@ class Graph:
         a total cost of getting to that specific
         point from the start
         """
-        # c_p_pos = self._start       # current_point_pos
-        # c_p = self._get(c_p_pos)    # current_point
-
         q = PriorityQueue()
         for pos in self:
             p = self._get(pos)
@@ -324,9 +319,9 @@ class Graph:
     def __next__(self):
         tmp = copy(self._current)
         self._current.x += 1
-        if not self._bounds.fits(tmp):
+        if tmp not in self._bounds:
             raise StopIteration
-        elif not self._bounds.fits(self._current):
+        elif self._current not in self._bounds:
             self._current.x = 0
             self._current.y += 1
         return tmp
@@ -349,14 +344,20 @@ def main(argv: List[str]) -> int:
                         nargs="?",
                         default=sys.stdin,
                         help="a path to the file containing the graph")
+    parser.add_argument("-p", "--pretty", action="store_true",
+                        help="use pretty colors")
+    parser.add_argument("-c", "--compare", action="store_true",
+                        help="compare the outcome with the raw graph")
     args = parser.parse_args(argv)
     graph = Graph(args.file)
     graph.dijkstra()
-    # graph.print_point_weight()
-    # print()
-    graph.print_path()
-    # print()
-    # graph.pretty_print_path()
+    if args.compare:
+        graph.print_point_weight()
+        print('- '*graph._width)
+    if args.pretty:
+        graph.pretty_print_path()
+    else:
+        graph.print_path()
     return 0
 
 
