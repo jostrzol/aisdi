@@ -332,9 +332,7 @@ def rgb_to_hex(rgb_color: Tuple[int, int, int]):
     for i in range(3):
         if len(hex(rgb_color[i])[2:]) == 1:
             hex_color += "0"
-            hex_color += hex(rgb_color[i])[2:]
-        else:
-            hex_color += hex(rgb_color[i])[2:]
+        hex_color += hex(rgb_color[i])[2:]
     return hex_color
 
 
